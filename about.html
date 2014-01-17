@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Lens PMC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="docs/assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 60px;
+      }
+
+      /* Custom container */
+      .container {
+        margin: 0 auto;
+        max-width: 1000px;
+      }
+      .container > hr {
+        margin: 60px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 80px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 100px;
+        line-height: 1;
+      }
+      .jumbotron .lead {
+        font-size: 24px;
+        line-height: 1.25;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+
+
+      /* Customize the navbar links to be fill the entire space of the .navbar */
+      .navbar .navbar-inner {
+        padding: 0;
+      }
+      .navbar .nav {
+        margin: 0;
+        display: table;
+        width: 100%;
+      }
+      .navbar .nav li {
+        display: table-cell;
+        width: 1%;
+        float: none;
+      }
+      .navbar .nav li a {
+        font-weight: bold;
+        text-align: center;
+        border-left: 1px solid rgba(255,255,255,.75);
+        border-right: 1px solid rgba(0,0,0,.1);
+      }
+      .navbar .nav li:first-child a {
+        border-left: 0;
+        border-radius: 3px 0 0 3px;
+      }
+      .navbar .nav li:last-child a {
+        border-right: 0;
+        border-radius: 0 3px 3px 0;
+      }
+    </style>
+    <link href="docs/assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="docs/assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="docs/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="docs/assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="docs/assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="docs/assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="docs/assets/ico/favicon.png">
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <div class="masthead">
+        <!--h3 class="muted">About Lens PMC</h3-->
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <ul class="nav">
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="About.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+        </div><!-- /.navbar -->
+      </div>
+
+      <!-- Jumbotron -->
+      <div class="jumbotron">
+        <h1>About Lens PMC</h1>
+      </div>
+
+      <hr>
+        <h3> About</h3>
+        <p>Lens PMC is a modern web-based platform for reading research articles deposited in PubMed Central® (PMC), a free archive of biomedical and life sciences journal literature at the U.S. National Institutes of Health's National Library of Medicine (NIH/NLM).</p>
+        <p>
+        While Open Access content is available in PMC, not all articles are available due to copyright. Publishers and individual authors continue to hold copyright on the material in PMC and users must abide by the terms defined by the copyright holder. All gold Open Access (CC-BY copyright) articles are displayed in full. Due to copyright restrictions, only the article abstract can be made available for non-CC-BY licenced articles.</p>
+
+        <h3> Motivation</h3>
+        <p> Working with digital documents has been difficult, primarily because they come in presentation-centric formats with the goal of appearing identical across multiple devices for printing purposes. Content today, however, is no longer being printed out readily. Instead, it is being read on a variety of platforms, from computers to tablets and other mobile devices. Although optimized for print, when presented with different screen sizes and other device inconsistencies traditional digital publishing formats lack key features that could otherwise improve readers' ability to focus on an author's arguments.</p>
+        <p>The web browser provides a unified platform for viewing content. Instead of binding the content to a presentation-focused format, we can view the content as data and utilize a defined data structure to make the content readily accessible. This data structure can then be processed as if it were its own database -- allowing users to query the content, create new content and build new tools.</p>
+        <p>
+        We have decided to focus our initial efforts on applying the data-centric representation of content to scientific literature. The Open Access scientific community has standardized much of their content into a formally annotated XML format, making it easier to gain access to a large library of articles. Scientific articles are an amalgamation of text, figures, tables, videos and references which are used to form the author’s argument. Scientific arguments are also rarely linear in nature, making it difficult to follow when all of the content is not readily viewable on a digital device. The incredible amount of available data and non-linear format of the articles made them the ideal candidate for testing the flexibility of our data-centric approach. With the release of Lens, we would like to promote, not only the data-centric representation of scientific content, but of any content which would be optimized for viewing on web clients.
+        
+        <h3>The Presentation of Lens</h3>
+        <p>When designing Lens, we worked to provide a flexible experience that supports a variety of use cases. A document map identifies the reader's position in the context of the entire article. It also outlines each paragraph in the article. The left panel includes all of the textual content of the article. The right panel includes the resources. The resources include the table of contents, figures, tables, videos, supplemental data, references and information about the article. By separating the content into individual panels, we allow the reader to focus on multiple content bits at the same time.</p>
+        <p>
+        When reading scientific articles, it is rare for a reader to read straight through the text and figures in order. Instead, they may look to get a quick overview of the paper by looking at the figures first. By separating the figures from the text, the reader can transition between the two independently of one another. This allows the reader to simultaneously view exactly the content they want to focus on at that moment.
+        <p>The presentation of the article information has also been redesigned so as to organize the information in a uniform way. Each publisher will have placed information such as an author’s impact statement, article keywords, major dataset links, etc. in different positions of their HTML or PDF versions of an article. With Lens, the aim is to distill all of the article information into organized subsections that can be displayed together on individual cards. These information cards create a uniform viewing experience, making it easy to quickly find what the reader is looking for.</p>
+        <p>
+        In addition to simplifying the reading experience of research articles, Lens also provides useful tools to share content with others. Each of the content nodes in the data structure are deep-linked.  This means that each state is defined by a given URL. Sharing a specific URL will take the new reader to the exact same state in their browser which will facilitate discussions about the content.</p>
+        
+        <h3>The Lens Article</h3>
+        <p>We are convinced that there is a need to break with traditional presentation-centric formats, by considering content as data and making it accessible in new ways. Therefore with the release of Lens, we’d like to promote a data-centric representation of scientific content, optimized for consumption by web-clients, the Lens Article. </p>
+        <p>Lens can display any document that conforms to a simple JSON representation. JSON representations are flexible and can be adapted to any type of content. The initial JSON object provides the framework for organizing all of the content in an article. The id and properties keys provide global access if many JSON articles are to be queried for an initial round of filtering. The nodes key contains all of the content and the view key defines indices describing the order in which the nodes will be displayed. The nodes are then linked together via annotations. Annotations represent either font styling or an explicit reference to a target content node that is contained in its source content code. Figure 1 outlines a simple example of how to use the JSON representation to compose an article for Lens.</p>
+        <p>
+        The creation of an article's JSON depends on a browser-based converter that runs through the XML tags, turning them into a smart data structure to power our viewer. The XML tags define various types of content nodes. Each node contains type, id and content keys that the viewer uses to define the rendering. All of the keys have their own definitions with regard to how Lens renders them. The translation from XML to a structured JSON creates a consistent presentation scheme for the content.</p>
+
+        <h3>PubMed Central</h3>
+        <p>PubMed Central® (PMC) is a free archive of biomedical and life sciences journal literature at the U.S. National Institutes of Health's National Library of Medicine (NIH/NLM). As an archive, PMC is designed to provide permanent access to all of its content, even as technology evolves and current digital literature formats potentially become obsolete. NLM believes that the best way to ensure the accessibility and viability of digital material over time is through consistent and active use of the archive. </p>
+        <p>
+        While OA content is available in PMC, not all articles are available due to copyright. Publishers and individual authors continue to hold copyright on the material in PMC and users must abide by the terms defined by the copyright holder.</p>
+
+        <h3>Credits</h3>
+        <p>Lens PMC is built off of <a href="http://lens.substance.io/#lens/about"> eLife Lens</a>, an open source project. The technology of eLife Lens was developed as a collaboration between UC Berkeley graduate student Ivan Grubisic and eLife. Michael Aufreiter from Substance provided support in the design and implementation. Samo Korošec (froodee) and Ian Hamilton (ripe) gave advice on the UX/UI design. Graham Nott implemented the deployment workflow and eLife provided support for the project and the initial corpus of documents against which the tool was developed. Rebecca Close helped with the redesign of the converter that now supports all NLM-compatible content. The source code for eLife Lens is available <a href="https://github.com/elifesciences/lens">here</a>.</p>
+      <hr>
+
+   <!-- /container -->
+    
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="docs/assets/js/jquery.js"></script>
+    <script src="docs/assets/js/bootstrap-transition.js"></script>
+    <script src="docs/assets/js/bootstrap-alert.js"></script>
+    <script src="docs/assets/js/bootstrap-modal.js"></script>
+    <script src="docs/assets/js/bootstrap-dropdown.js"></script>
+    <script src="docs/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="docs/assets/js/bootstrap-tab.js"></script>
+    <script src="docs/assets/js/bootstrap-tooltip.js"></script>
+    <script src="docs/assets/js/bootstrap-popover.js"></script>
+    <script src="docs/assets/js/bootstrap-button.js"></script>
+    <script src="docs/assets/js/bootstrap-collapse.js"></script>
+    <script src="docs/assets/js/bootstrap-carousel.js"></script>
+    <script src="docs/assets/js/bootstrap-typeahead.js"></script>
+
+  </body>
+</html>
