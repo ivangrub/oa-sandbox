@@ -347,7 +347,7 @@
           <h1>Search PMC Articles</h1>
             <p>Search based on PMCID, author, title, and keyword to find articles to read in Lens PMC.*</p>
         <input id="search" class="search-query" type="text">
-        <a id="search_button" class="btn btn-inverse" href="#" onclick="callPMC();" target="_blank">Search</a>
+        <a id="search_button" class="btn btn-inverse" href="#" >Search</a>
         <p> </p>         
         <p>* Not all articles are Open Access in PMC. Due to copyright, these papers are not available in full.</p>
       </div>
@@ -381,6 +381,10 @@
           $('#myCarousel').carousel()
         })
       }(window.jQuery)
+
+$('#search_button').on("click", function() {
+  document.location = "/results.html?query=" + $("#search").val();
+}); 
     </script>
     <script src="docs/assets/js/holder/holder.js"></script>
   </body>
