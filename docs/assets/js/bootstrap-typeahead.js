@@ -1,6 +1,6 @@
 /* =============================================================
  * bootstrap-typeahead.js v2.3.2
- * http://getbootstrap.com/2.3.2/javascript.html#typeahead
+ * http://twbs.github.com/bootstrap/javascript.html#typeahead
  * =============================================================
  * Copyright 2013 Twitter, Inc.
  *
