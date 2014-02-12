@@ -2,85 +2,212 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Lens PMC</title>
+    <title>OA Sandbox</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <!-- Le styles -->
     <link href="docs/assets/css/bootstrap.css" rel="stylesheet">
-    <style type="text/css">
-      body {
-        padding-top: 20px;
-        padding-bottom: 60px;
-      }
+    <link href="docs/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <style>
 
-      /* Custom container */
-      .container {
-        margin: 0 auto;
-        max-width: 1000px;
-      }
-      .container > hr {
-        margin: 60px 0;
-      }
+    /* GLOBAL STYLES
+    -------------------------------------------------- */
+    /* Padding below the footer and lighter body text */
 
-      /* Main marketing message and sign up button */
-      .jumbotron {
-        margin: 80px 0;
-        text-align: center;
-      }
-      .jumbotron h1 {
-        font-size: 100px;
-        line-height: 1;
-      }
-      .jumbotron .lead {
-        font-size: 24px;
-        line-height: 1.25;
-      }
-      .jumbotron .btn {
-        font-size: 21px;
-        padding: 14px 24px;
-      }
-
-      /* Supporting marketing content */
-      .marketing {
-        margin: 60px 0;
-      }
-      .marketing p + h4 {
-        margin-top: 28px;
-      }
+    body {
+      padding-bottom: 40px;
+      color: #5a5a5a;
+    }
 
 
-      /* Customize the navbar links to be fill the entire space of the .navbar */
-      .navbar .navbar-inner {
+
+
+    /* CUSTOMIZE THE CAROUSEL
+    -------------------------------------------------- */
+
+    /* Carousel base class */
+    .carousel {
+      margin-bottom: 60px;
+    }
+
+    .carousel .container {
+      position: relative;
+      z-index: 9;
+    }
+
+    .carousel-control {
+      height: 80px;
+      margin-top: 0;
+      font-size: 120px;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+      background-color: transparent;
+      border: 0;
+      z-index: 10;
+    }
+
+    .carousel .item {
+      height: 500px;
+    }
+    .carousel img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      height: 500px;
+    }
+
+    .carousel-caption {
+      background-color: transparent;
+      position: static;
+      max-width: 580px;
+      padding: 0 20px;
+      margin-top: 200px;
+    }
+    .carousel-caption h1,
+    .carousel-caption .lead {
+      margin: 0;
+      line-height: 1.25;
+      color: #fff;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+    }
+    .carousel-caption .btn {
+      margin-top: 10px;
+    }
+
+
+
+    /* MARKETING CONTENT
+    -------------------------------------------------- */
+
+    /* Center align the text within the three columns below the carousel */
+    .marketing .span4 {
+      text-align: center;
+    }
+    .marketing h2 {
+      font-weight: normal;
+    }
+    .marketing .span4 p {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+
+    /* Featurettes
+    ------------------------- */
+
+    .featurette-divider {
+      margin: 80px 0; /* Space out the Bootstrap <hr> more */
+    }
+    .featurette {
+      padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
+      overflow: hidden; /* Vertically center images part 2: clear their floats. */
+    }
+    .featurette-image {
+      margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+    }
+
+    /* Give some space on the sides of the floated elements so text doesn't run right into it. */
+    .featurette-image.pull-left {
+      margin-right: 40px;
+    }
+    .featurette-image.pull-right {
+      margin-left: 40px;
+    }
+
+    /* Thin out the marketing headings */
+    .featurette-heading {
+      font-size: 50px;
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+
+
+    /* RESPONSIVE CSS
+    -------------------------------------------------- */
+
+    @media (max-width: 979px) {
+
+      .container.navbar-wrapper {
+        margin-bottom: 0;
+        width: auto;
+      }
+      .navbar-inner {
+        border-radius: 0;
+        margin: -20px 0;
+      }
+
+      .carousel .item {
+        height: 500px;
+      }
+      .carousel img {
+        width: auto;
+        height: 500px;
+      }
+
+      .featurette {
+        height: auto;
         padding: 0;
       }
-      .navbar .nav {
-        margin: 0;
-        display: table;
-        width: 100%;
-      }
-      .navbar .nav li {
-        display: table-cell;
-        width: 1%;
+      .featurette-image.pull-left,
+      .featurette-image.pull-right {
+        display: block;
         float: none;
+        max-width: 40%;
+        margin: 0 auto 20px;
       }
-      .navbar .nav li a {
-        font-weight: bold;
-        text-align: center;
-        border-left: 1px solid rgba(255,255,255,.75);
-        border-right: 1px solid rgba(0,0,0,.1);
+    }
+
+
+    @media (max-width: 767px) {
+
+      .navbar-inner {
+        margin: -20px;
       }
-      .navbar .nav li:first-child a {
-        border-left: 0;
-        border-radius: 3px 0 0 3px;
+
+      .carousel {
+        margin-left: -20px;
+        margin-right: -20px;
       }
-      .navbar .nav li:last-child a {
-        border-right: 0;
-        border-radius: 0 3px 3px 0;
+      .carousel .container {
+
       }
+      .carousel .item {
+        height: 300px;
+      }
+      .carousel img {
+        height: 300px;
+      }
+      .carousel-caption {
+        width: 65%;
+        padding: 0 70px;
+        margin-top: 100px;
+      }
+      .carousel-caption h1 {
+        font-size: 30px;
+      }
+      .carousel-caption .lead,
+      .carousel-caption .btn {
+        font-size: 18px;
+      }
+
+      .marketing .span4 + .span4 {
+        margin-top: 40px;
+      }
+
+      .featurette-heading {
+        font-size: 30px;
+      }
+      .featurette .lead {
+        font-size: 18px;
+        line-height: 1.5;
+      }
+
+    }
     </style>
-    <link href="docs/assets/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -97,103 +224,95 @@
 
   <body>
 
-    <div class="container">
 
-      <div class="masthead">
-        <!--h3 class="muted">Lens PMC</h3-->
-        <div class="navbar">
+
+    <!-- NAVBAR
+    ================================================== -->
+    <div class="navbar-wrapper">
+      <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
+      <div class="container">
+
+        <div class="navbar navbar-inverse">
           <div class="navbar-inner">
-            <div class="container">
+            <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="index.html">OA Sandbox</a>
+            <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+            <div class="nav-collapse collapse">
               <ul class="nav">
-                <li class="active"><a href="index.html">Home</a></li>
+                <li class="active"><a href="#">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
               </ul>
+            </div><!--/.nav-collapse -->
+          </div><!-- /.navbar-inner -->
+        </div><!-- /.navbar -->
+
+      </div> <!-- /.container -->
+    </div><!-- /.navbar-wrapper -->
+
+
+
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="docs/assets/img/examples/slide-01.jpg" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>PMC Revisualized</h1>
+              <p class="lead">With its modern web-based interface, Lens makes reading scientific articles easier. Explore figures, figure descriptions, references and more - all with the article in full view.</p>
+              <!--<a class="btn btn-large btn-primary" href="#">Sign up today</a> -->
             </div>
           </div>
-        </div><!-- /.navbar -->
-      </div>
-
-      <!-- Jumbotron -->
-      <div class="jumbotron">
-        <h1>Lens PMC</h1>
-        <p class="lead">Lens PMC provides a novel way of reading research articles in PubMed Central. With its modern web-based interface, Lens makes reading scientific articles easier. Explore figures, figure descriptions, references and more - all with the article in full view.</p>
-        <a class="btn btn-small btn-inverse" href="data/about.html">Learn More</a>
-      </div>
-
-      <hr>
-     
-      <div class="row-fluid marketing">
-        <div class="span6">
-          <h4><a href="lens/?url=http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D3144511" target="_blank">Enhanced apoptotic and reduced protective response in chondrocytes following endoplasmic reticulum stress in osteoarthritic cartilage</a></h4>
-          <p><i>Int J Exp Pathol. 2011 August; 92(4): 232–242.</i></p>
-          <p>Koji Takada, Jun Hirose, Kei Senba, Soichiro Yamabe, Yuichi Oike, Tomomi Gotoh, Hiroshi Mizuta</p>
-
-          <h4><a href="lens/?url=http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D1664609" target="_blank">Does HIV Cause Cardiovascular Disease?</a></h4>
-          <p><i>PLoS Med. 2006 November; 3(11): e496.</i></p>
-          <p>Andrew Carr and Daniel Ory</p>
-
-          <h4><a href="lens/?url=http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D165743" target="_blank">Integration and Distribution of Lactobacillus johnsonii Prophages</a></h4>
-          <p><i>J Bacteriol. 2003 August; 185(15): 4603–4608.</i></p>
-          <p>Marco Ventura, Carlos Canchaya, David Pridmore, Bernard Berger, Harald Brüssow</p>
-
         </div>
-
-        <div class="span6">
-          <h4><a href="lens/?url=http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D3687364" target="_blank">Condensin controls recruitment of RNA polymerase II to achieve nematode X-chromosome dosage compensation</a></h4>
-          <p><i>eLife. 2013; 2: e00808.</i></p>
-          <p>William S Kruesi, Leighton J Core, Colin T Waters, John T Lis, Barbara J Meyer</p>
-
-          <h4><a href="lens/?url=http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D3792178" target="_blank">Data reuse and the open data citation advantage</a></h4>
-          <p><i>PeerJ. 2013; 1: e175</i></p>
-          <p>Heather A. Piwowar, Todd J. Vision</p>
-
-          <h4><a href="lens/?url=http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D3410810" target="_blank">Up-regulation of microglial cathepsin C expression and activity in lipopolysaccharide-induced neuroinflammation</a></h4>
-          <p><i>J Neuroinflammation. 2012; 9: 96.</i></p>
-          <p>Kai Fan, Xuefei Wu, Bin Fan, Ning Li, Yongzhong Lin, Yiwen Yao, Jianmei Ma</p>
-
-
+        <div class="item">
+          <img src="docs/assets/img/examples/slide-02.jpg" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Web-native tools (like it's 2014)</h1>
+              <p class="lead">OA Sandbox integrates the newest tools created to enhance discovery, discussion, and engagement with the research that you need.</p>
+              <a class="btn btn-large btn-primary" href="#">Learn more</a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="docs/assets/img/examples/slide-03.jpg" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Contribute to the sandbox</h1>
+              <p class="lead">Develop with us: build, apply, and test your software with the full corpus of PMC content for the whole biomedical and life sceience community.</p>
+              <a class="btn btn-large btn-primary" href="#">Learn more</a>
+            </div>
+          </div>
         </div>
       </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div><!-- /.carousel -->
 
-      <hr>
-      <div class="jumbotron">
-          <h2>Search PMC Articles</h2>
-            <p>Search PMC based on PMCID, author, title, and keyword to find articles to read in Lens PMC.*</p>
+
+
+    <div class="container marketing">
+            <div>
+          <h1>Search PMC Articles</h1>
+            <p>Search based on PMCID, author, title, and keyword to find articles to read in Lens PMC.*</p>
         <input id="search" class="search-query" type="text">
-        <a id="search_button" class="btn btn-small btn-inverse" href="#" onclick="callPMC();" target="_blank">Search</a>
+        <a id="search_button" class="btn btn-inverse" href="#" >Search</a>
         <p> </p>         
-        <p>* While OA content is available in PMC, not all articles are available due to copyright. Publishers and individual authors continue to hold copyright on the material in PMC and users must abide by the terms defined by the copyright holder.</p>
+        <p>* Not all articles are Open Access in PMC. Due to copyright, these papers are not available in full.</p>
       </div>
-    </div> <!-- /container -->
-    <!--Example Articles
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D3144511
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D1664609
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D165743
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D3687364
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D3792178
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D3410810
-
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D1362254
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D382300
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D139019
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D3766205
--->
-<!--Example Articles PMC URL
-http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3144511/
-http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1664609/
-http://www.ncbi.nlm.nih.gov/pmc/articles/PMC165743/
-http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3687364/
-http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3792178/
-http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3410810/
-
-
--->
+    </div> 
 
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="docs/assets/js/jquery.js"></script>
     <script src="docs/assets/js/bootstrap-transition.js"></script>
     <script src="docs/assets/js/bootstrap-alert.js"></script>
     <script src="docs/assets/js/bootstrap-modal.js"></script>
@@ -206,15 +325,21 @@ http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3410810/
     <script src="docs/assets/js/bootstrap-collapse.js"></script>
     <script src="docs/assets/js/bootstrap-carousel.js"></script>
     <script src="docs/assets/js/bootstrap-typeahead.js"></script>
-    <script type=text/javascript>
-    function callPMC() {
-      var id = document.getElementById("search")
-      var url =["lens/?url=http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D",id.value].join("")
-      id.value = "";
-      var atag = document.getElementById("search_button");
-      atag.setAttribute("href",url);
-    }
-    </script>
+    <script>
+      !function ($) {
+        $(function(){
+          // carousel demo
+          $('#myCarousel').carousel(
+          {
+            interval: false
+          })
+        })
+      }(window.jQuery)
 
+$('#search_button').on("click", function() {
+  window.location.href = "/results.html?query=" + $("#search").val();
+}); 
+    </script>
+    <script src="docs/assets/js/holder/holder.js"></script>
   </body>
 </html>
