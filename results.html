@@ -290,7 +290,7 @@ http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3410810/
       var pmcId = $(val).find("Item[Name='ArticleIds'] > Item[Name='pmcid']").text();
       var doi = $(val).find("Item[Name='ArticleIds'] > Item[Name='doi']").text();
 
-      var pmcUrl = encodeURI("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id=" + pmcId)
+      var pmcUrl = encodeURI("http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D" + pmcId)
 
       var result = $("<li>")
       .append(
