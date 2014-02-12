@@ -331,13 +331,13 @@
           // carousel demo
           $('#myCarousel').carousel(
           {
-            interval:'false';
+            interval: false
           })
         })
       }(window.jQuery)
 
 $('#search_button').on("click", function() {
-  document.location = "/results.html?query=" + $("#search").val();
+  window.location.href = "/results.html?query=" + $("#search").val();
 }); 
     </script>
     <script src="docs/assets/js/holder/holder.js"></script>
