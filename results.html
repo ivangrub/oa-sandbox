@@ -205,13 +205,113 @@ http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3410810/
     <script src="docs/assets/js/bootstrap-collapse.js"></script>
     <script src="docs/assets/js/bootstrap-carousel.js"></script>
     <script src="docs/assets/js/bootstrap-typeahead.js"></script>
+    <script src="docs/assets/js/bootstrap-paginator.min.js"></script>
+    <script src="docs/assets/js/jquery-dateFormat.min.js"></script>
     <script type=text/javascript>
-      function callPMC() {
-        var id = document.getElementById("search")
-        var url =["lens/?url=http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D",id.value].join("")
-        id.value = "";
-        var atag = document.getElementById("search_button");
-        atag.setAttribute("href",url);
+      function callPMC(currentPage) {
+  if (typeof(currentPage)==='undefined') currentPage = 1;
+
+  // get the query term.
+  var queryTerm = $("#search").val();
+
+  var retmax = 10;
+    // get the start. 
+  var retstart = (currentPage - 1) * retmax;
+  
+  var searchUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc&term=" + queryTerm + "&retmax=" + retmax + "&retstart=" + retstart;
+  console.log("search url: " + searchUrl);
+  var request = $.get(searchUrl);
+  var chained = request.then(function(data) {
+    var total = $(data).find("eSearchResult > Count").text();
+    console.log("total search results: " + total);
+    var totalPages = (total / retmax);
+    if (total % retmax > 0) {
+      totalPages = totalPages + 1;
+    }
+
+    var options = {
+      currentPage: currentPage,
+      totalPages: totalPages,
+      onPageClicked: function(e, originalEvent, type, page) {
+        console.log(page + " page clicked");
+        callPMC(page);
+      }
+    };
+
+    $('.pagination').bootstrapPaginator(options);
+
+    var pmcIds = $.map($(data).find("IdList Id"), function(val, index) {
+      return $(val).text();
+    });
+    console.log("pmcIds: " + pmcIds);
+    
+    var metadataUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pmc&id=" + pmcIds.join(",");
+    console.log("metadata url: " + metadataUrl);
+    return $.get(metadataUrl);
+  });
+
+  chained.done(function(data) {
+    $("article > ul").empty();
+
+    $(data).find("eSummaryResult > DocSum").each(function(index, val) {
+      var title = $(val).find("Item[Name='Title']").text();
+      var authors = $.map($(val).find("Item[Name='AuthorList'] > Item"), function(val, index) {
+        return $(val).text(); 
+      }).join(", ");
+
+      var pubDate = $(val).find("Item[Name='PubDate']").text();
+      var ePubDate = $(val).find("Item[Name='EPubDate']").text();
+      
+      var source = $(val).find("Item[Name='Source']").text();
+      var so = $(val).find("Item[Name='SO']").text();
+      so = so.replace(";", "; ");
+      so = so.replace(":", ": ");
+
+      // formatting info
+      var info = source + ". " + so;
+      if (pubDate.length == 0) {
+        info = source + ". " + ePubDate.substring(0, 4) + so;
+      }       
+
+      // logic around displaying published date
+      // 2011 November 17
+      var published = "Published ";
+      if (ePubDate.length > 0) {
+        // epubdate: 2013/09/30
+        var date = new Date(ePubDate.substring(0, 4), ePubDate.substring(5, 7), ePubDate.substring(8, 10));
+        date = $.format.date(date, "yyyy MMM d");
+        published = published + "online " + date;
+      } else if (pubDate.length > 0) {
+        // pubdate: 2013 Oct 15
+        published = published + "on " + pubDate;
+      }
+
+      var pmId = $(val).find("Item[Name='ArticleIds'] > Item[Name='pmid']").text();
+      var pmcId = $(val).find("Item[Name='ArticleIds'] > Item[Name='pmcid']").text();
+      var doi = $(val).find("Item[Name='ArticleIds'] > Item[Name='doi']").text();
+
+      var pmcUrl = encodeURI("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id=" + pmcId)
+
+      var result = $("<li>")
+      .append(
+        $("<h4>").append($("<a>").attr("href", "lens/?url=" + pmcUrl).attr("target", "_blank").text(title))
+      )
+      .append(
+        $("<p>")
+        .append(authors)
+        .append($("<br>"))
+        .append($("<i>").append(info))
+        .append(".&nbsp;&nbsp;")
+        .append(published)
+        .append($("<br>"))
+        .append("doi: " + doi)
+      );
+
+      $("article > ul").append(result);
+
+    });
+  });
+
       }
     </script>
 
