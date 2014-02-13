@@ -339,6 +339,14 @@
 $('#search_button').on("click", function() {
   window.location.href = "/results.html?query=" + $("#search").val();
 }); 
+
+$("#search").on("keypress", function(event) {
+  if ( event.which == 13 ) {
+    event.preventDefault();
+    $("#search_button").click();
+  }
+});
+
     </script>
     <script src="docs/assets/js/holder/holder.js"></script>
   </body>

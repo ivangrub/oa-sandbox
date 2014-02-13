@@ -113,17 +113,7 @@
         <article class="span8 result-list">
           <ul class="unstyled"></ul>
 
-        <div class="pagination">
-<!--           <ul>
-            <li><a href="#">Prev</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">Next</a></li>
-          </ul>
- -->        </div>
+        <div class="pagination"></div>
         
       </article>
 
@@ -173,6 +163,13 @@ http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3410810/
     <script src="docs/assets/js/bootstrap-paginator.min.js"></script>
     <script src="docs/assets/js/jquery-dateFormat.min.js"></script>
     <script type=text/javascript>
+
+$("#search").on("keypress", function(event) {
+  if ( event.which == 13 ) {
+    event.preventDefault();
+    callPMC();
+  }
+});
 
 // got from http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
 function getParameterByName(name) {
@@ -281,6 +278,10 @@ function callPMC(currentPage) {
       $("article > ul").append(result);
 
     });
+
+    // until we figure out what should be in focus after the search result is rendered, 
+    // don't focus on anything
+    $("#search").blur();
   });
 }
     </script>
