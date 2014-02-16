@@ -98,16 +98,22 @@
           <sidebar class="span2 form-inline">
            <h3>OA</h3>
            <ul class="unstyled">
-            <li><label class="radio" name="full_only"><input type="radio" checked="checked" name="full_only"/>Full Article Only</label></li>
-            <li><label class="radio" name="all_results"><input type="radio" name="all_results"/>All Results</label></li>
+            <li><label class="radio" name="full_only"><input type="radio" checked="checked" name="type" value="full_only"/>Full Article Only</label></li>
+            <li><label class="radio" name="all_results"><input type="radio" name="type" value="all_results"/>All Results</label></li>
 
           </ul>
           <h3>Journals</h3>
           <ul class="unstyled">
-            <li><label class="checkbox"><input type="checkbox" name="blah"/>eLife</label></li>
-            <li><label class="checkbox"><input type="checkbox" name="blah"/>PeerJ</label></li>
-            <li><label class="checkbox"><input type="checkbox" name="blah"/>BioMed Central</label></li>
-            <li><label class="checkbox"><input type="checkbox" name="blah"/>PLOS</label></li>
+            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="eLife"/>eLife</label></li>
+            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PeerJ"/>PeerJ</label></li>
+            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Biology"/>PLOS Biology</label></li>
+            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Computational Biology"/>PLOS Comp Biol</labe></li>
+            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Currents"/>PLOS Currents</label></li>
+            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Genetics"/>PLOS Genetics</label></li>
+            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Medicine"/>PLOS Medicine</label></li>
+            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Neglected Tropical Diseases"/>PLOS NTD</label></li>
+            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS ONE"/>PLOS ONE</label></li>
+            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Pathogens"/>PLOS Pathogens</label></li>
           </ul>
         </sidebar>
         <article class="span8 result-list">
@@ -197,7 +203,25 @@ function callPMC(currentPage) {
     // get the start. 
   var retstart = (currentPage - 1) * retmax;
   
-  var searchUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc&term=" + queryTerm + "&retmax=" + retmax + "&retstart=" + retstart;
+  var searchUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc";
+  searchUrl = searchUrl + "&retmax=" + retmax + "&retstart=" + retstart;
+  searchUrl = searchUrl + "&term=" + queryTerm ;
+
+  if ($("input[name='jrnlpub']:checked").length > 0) {
+    var journalfilter = " AND (";
+    $("input[name='jrnlpub']:checked").each(function(index) {
+      journalfilter = journalfilter + "\"" + $(this).val() + "\"" + "[Jour] OR ";
+    });
+    journalfilter = journalfilter.substring(0, journalfilter.length - 4);
+    journalfilter = journalfilter + ")";
+
+    searchUrl = searchUrl + journalfilter;
+  }
+
+  if ($("input[type='radio']:checked").val() === "full_only") {
+    searchUrl = searchUrl + " AND \"open access\"[filter]";
+  }
+
   console.log("search url: " + searchUrl);
   var request = $.get(searchUrl);
   var chained = request.then(function(data) {
