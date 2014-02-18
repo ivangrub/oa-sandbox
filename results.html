@@ -87,11 +87,12 @@
      <!--      <header class="header">
             <h1>12345 results</h1>
           </header> -->
-<div class="row">
-          <div class="input-append search-bar span8 pull-right">
+        <div class="row">
+          <div class="input-append span8 pull-right">
             <input class="search span7" id="search" type="text">
             <button class="btn btn-inverse" type="button" onclick="callPMC();">Search!</button>
           </div>
+          <div id="result-total" class="search-bar span8 pull-right"></div>
         </div>    
 
         <section class="row">
@@ -227,10 +228,16 @@ function callPMC(currentPage) {
   var chained = request.then(function(data) {
     var total = $(data).find("eSearchResult > Count").text();
     console.log("total search results: " + total);
+    if (total == 0) {
+      $("#result-total").text("0 results");
+      return;
+    }
     var totalPages = (total / retmax);
     if (total % retmax > 0) {
       totalPages = totalPages + 1;
     }
+
+    $("#result-total").text((((currentPage - 1) * retmax) + 1) + "-" + (currentPage * retmax) + " of " + total + " results");
 
     var options = {
       currentPage: currentPage,
