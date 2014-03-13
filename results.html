@@ -279,7 +279,7 @@ function callPMC(currentPage) {
       var published = "";
       if (ePubDate.length > 0) {
         // epubdate: 2013/09/30
-        var date = new Date(ePubDate.substring(0, 4), ePubDate.substring(5, 7), ePubDate.substring(8, 10));
+        var date = new Date(ePubDate.substring(0, 4), ePubDate.substring(5, 7) - 1, ePubDate.substring(8, 10));
         date = $.format.date(date, "yyyy MMM d");
         published = date;
       } else if (pubDate.length > 0) {
