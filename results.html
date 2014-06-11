@@ -104,11 +104,11 @@
 
           </ul>
           <h3>Journals</h3>
-          <ul class="unstyled">
+          <ul class="unstyled journals-list">
             <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="eLife"/>eLife</label></li>
             <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PeerJ"/>PeerJ</label></li>
             <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Biology"/>PLOS Biology</label></li>
-            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Computational Biology"/>PLOS Comp Biol</labe></li>
+            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Computational Biology"/>PLOS Comp Biol</label></li>
             <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Currents"/>PLOS Currents</label></li>
             <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Genetics"/>PLOS Genetics</label></li>
             <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Medicine"/>PLOS Medicine</label></li>
@@ -179,6 +179,7 @@ $("#search").on("keypress", function(event) {
 });
 
 // got from http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
