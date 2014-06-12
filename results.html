@@ -90,31 +90,32 @@
         <div class="row">
           <div class="input-append span8 pull-right">
             <input class="search span7" id="search" type="text">
-            <button class="btn btn-inverse" type="button" onclick="callPMC();">Search!</button>
+            <button class="btn btn-inverse search-submit" type="button">Search!</button>
           </div>
           <div id="result-total" class="search-bar span8 pull-right"></div>
         </div>    
 
         <section class="row">
           <sidebar class="span2 form-inline">
+
            <h3>OA</h3>
            <ul class="unstyled">
-            <li><label class="radio" name="full_only"><input type="radio" checked="checked" name="type" value="full_only"/>Full Article Only</label></li>
-            <li><label class="radio" name="all_results"><input type="radio" name="type" value="all_results"/>All Results</label></li>
-
+            <li class="search-submit"><label class="radio" name="full_only"><input type="radio" checked="checked" name="type" value="full_only"/>Full Article Only</label></li>
+            <li class="search-submit"><label class="radio" name="all_results"><input type="radio" name="type" value="all_results"/>All Results</label></li>
           </ul>
+
           <h3>Journals</h3>
-          <ul class="unstyled journals-list">
-            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="eLife"/>eLife</label></li>
-            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PeerJ"/>PeerJ</label></li>
-            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Biology"/>PLOS Biology</label></li>
-            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Computational Biology"/>PLOS Comp Biol</label></li>
-            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Currents"/>PLOS Currents</label></li>
-            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Genetics"/>PLOS Genetics</label></li>
-            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Medicine"/>PLOS Medicine</label></li>
-            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Neglected Tropical Diseases"/>PLOS NTD</label></li>
-            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS ONE"/>PLOS ONE</label></li>
-            <li><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Pathogens"/>PLOS Pathogens</label></li>
+          <ul class="unstyled" id="journal-list">
+            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="eLife"/>eLife</label></li>
+            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PeerJ"/>PeerJ</label></li>
+            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Biology"/>PLOS Biology</label></li>
+            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Computational Biology"/>PLOS Comp Biol</label></li>
+            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Currents"/>PLOS Currents</label></li>
+            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Genetics"/>PLOS Genetics</label></li>
+            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Medicine"/>PLOS Medicine</label></li>
+            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Neglected Tropical Diseases"/>PLOS NTD</label></li>
+            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS ONE"/>PLOS ONE</label></li>
+            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Pathogens"/>PLOS Pathogens</label></li>
           </ul>
         </sidebar>
         <article class="span8 result-list">
@@ -169,34 +170,50 @@ http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3410810/
     <script src="docs/assets/js/bootstrap-typeahead.js"></script>
     <script src="docs/assets/js/bootstrap-paginator.min.js"></script>
     <script src="docs/assets/js/jquery-dateFormat.min.js"></script>
-    <script type=text/javascript>
+    <script type="text/javascript">
 
 $("#search").on("keypress", function(event) {
   if ( event.which == 13 ) {
     event.preventDefault();
-    callPMC();
+    var searchStr = $('#search').val();
+    search(searchStr);
   }
 });
 
 // got from http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+    var results = regex.exec(location.search);
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 $( document ).ready(function() {
   value = getParameterByName("query")
   if (value.length > 0) {
-    $("#search").val(value);
-    callPMC();
+    var searchStr = $("#search").val(value);
+    search(searchStr);
   }
+  $('.search-submit').click(function() {
+    var searchStr = $('#search').val();
+    search(searchStr);
+  });
+  
 });
 
-function callPMC(currentPage) {
-  if (typeof(currentPage)==='undefined') currentPage = 1;
+function search(searchStr) {
+  window.searchStr = searchStr;
+  
+  //call PubMed and get results, starting at page 1
+  callPMC(searchStr, 1)
+  
+}
+
+function switchPage(pageNum) {
+  callPMC(window.searchStr, pageNum);
+}
+
+function callPMC(search, currentPage) {
 
   // get the query term.
   var queryTerm = $("#search").val();
@@ -224,40 +241,41 @@ function callPMC(currentPage) {
     searchUrl = searchUrl + " AND \"open access\"[filter]";
   }
 
-  console.log("search url: " + searchUrl);
   var request = $.get(searchUrl);
   var chained = request.then(function(data) {
     var total = $(data).find("eSearchResult > Count").text();
-    console.log("total search results: " + total);
+ 
     if (total == 0) {
       $("#result-total").text("0 results");
+      $('.pagination').html('');
       return;
-    }
-    var totalPages = (total / retmax);
-    if (total % retmax > 0) {
-      totalPages = totalPages + 1;
-    }
-
-    $("#result-total").text((((currentPage - 1) * retmax) + 1) + "-" + (currentPage * retmax) + " of " + total + " results");
-
-    var options = {
-      currentPage: currentPage,
-      totalPages: totalPages,
-      onPageClicked: function(e, originalEvent, type, page) {
-        console.log(page + " page clicked");
-        callPMC(page);
+    } else if (total < 10) {
+      $('#result-total').text("1 - " + total + " results");
+      $('.pagination').html('');
+    } else {
+      $("#result-total").text((((currentPage - 1) * retmax) + 1) + "-" + (currentPage * retmax) + " of " + total + " results");
+    
+      var totalPages = (total / retmax);
+      if (total % retmax > 0) {
+        totalPages = totalPages + 1;
       }
-    };
-
-    $('.pagination').bootstrapPaginator(options);
+      
+      var options = {
+        currentPage: currentPage,
+        totalPages: totalPages,
+        onPageClicked: function(e, originalEvent, type, page) {
+          switchPage(page);
+        }
+      };
+  
+      $('.pagination').bootstrapPaginator(options);
+    }
 
     var pmcIds = $.map($(data).find("IdList Id"), function(val, index) {
       return $(val).text();
     });
-    console.log("pmcIds: " + pmcIds);
     
     var metadataUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pmc&id=" + pmcIds.join(",");
-    console.log("metadata url: " + metadataUrl);
     return $.get(metadataUrl);
   });
 
