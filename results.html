@@ -191,10 +191,10 @@ function getParameterByName(name) {
 $( document ).ready(function() {
   value = getParameterByName("query")
   if (value.length > 0) {
-    var searchStr = $("#search").val(value);
-    search(searchStr);
+    $("#search").val(value);
+    search(value);
   }
-  $('.search-submit').click(function() {
+  $('.search-submit').change(function() {
     var searchStr = $('#search').val();
     search(searchStr);
   });
