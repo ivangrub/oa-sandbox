@@ -90,9 +90,8 @@
         <div class="row">
           <div class="input-append span8 pull-right">
             <input class="search span7" id="search" type="text">
-            <button class="btn btn-inverse search-submit" type="button">Search!</button>
+            <button class="btn btn-inverse" id="search-submit" type="button">Search!</button>
           </div>
-          <div id="result-total" class="search-bar span8 pull-right"></div>
         </div>    
 
         <section class="row">
@@ -100,57 +99,28 @@
 
            <h3>OA</h3>
            <ul class="unstyled">
-            <li class="search-submit"><label class="radio" name="full_only"><input type="radio" checked="checked" name="type" value="full_only"/>Full Article Only</label></li>
-            <li class="search-submit"><label class="radio" name="all_results"><input type="radio" name="type" value="all_results"/>All Results</label></li>
+            <li class="search-refresh"><label class="radio" name="full_only"><input type="radio" checked="checked" name="type" value="full_only"/>Full Article Only</label></li>
+            <li class="search-refresh"><label class="radio" name="all_results"><input type="radio" name="type" value="all_results"/>All Results</label></li>
           </ul>
 
           <h3>Journals</h3>
           <ul class="unstyled" id="journal-list">
-            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="eLife"/>eLife</label></li>
-            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PeerJ"/>PeerJ</label></li>
-            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Biology"/>PLOS Biology</label></li>
-            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Computational Biology"/>PLOS Comp Biol</label></li>
-            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Currents"/>PLOS Currents</label></li>
-            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Genetics"/>PLOS Genetics</label></li>
-            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Medicine"/>PLOS Medicine</label></li>
-            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Neglected Tropical Diseases"/>PLOS NTD</label></li>
-            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS ONE"/>PLOS ONE</label></li>
-            <li class="search-submit"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="PLoS Pathogens"/>PLOS Pathogens</label></li>
+            
           </ul>
         </sidebar>
         <article class="span8 result-list">
+          <h3>Results</h3>
+          <div id="result-total" class="search-bar span8 pull-right"></div>
+          
+          <div class="pagination"></div>
+          
           <ul class="unstyled"></ul>
 
-        <div class="pagination"></div>
+          <div class="pagination"></div>
         
-      </article>
-
-
+        </article>
     </section>
   </div> <!-- /container -->
-    <!--Example Articles
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D3144511
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D1664609
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D165743
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D3687364
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D3792178
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D3410810
-
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D1362254
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D382300
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D139019
-http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D3766205
--->
-<!--Example Articles PMC URL
-http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3144511/
-http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1664609/
-http://www.ncbi.nlm.nih.gov/pmc/articles/PMC165743/
-http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3687364/
-http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3792178/
-http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3410810/
-
-
--->
 
     <!-- Le javascript
     ================================================== -->
@@ -175,8 +145,7 @@ http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3410810/
 $("#search").on("keypress", function(event) {
   if ( event.which == 13 ) {
     event.preventDefault();
-    var searchStr = $('#search').val();
-    search(searchStr);
+    search( $('#search').val() );
   }
 });
 
@@ -188,35 +157,30 @@ function getParameterByName(name) {
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-$( document ).ready(function() {
+$( document ).ready(function() {  
   value = getParameterByName("query")
   if (value.length > 0) {
-    var searchStr = $("#search").val(value);
-    search(searchStr);
+    search(value);
   }
-  $('.search-submit').click(function() {
-    var searchStr = $('#search').val();
-    search(searchStr);
-  });
-  
+  $('#search-submit').click(function() {
+    search( $('#search').val() );
+  })  
 });
 
 function search(searchStr) {
   window.searchStr = searchStr;
-  
+  //set the journals list to an empty array
+  window.jList = [];
+  $('#journal-list').html('');
   //call PubMed and get results, starting at page 1
-  callPMC(searchStr, 1)
-  
+  callPMC(searchStr, 1);  
 }
 
 function switchPage(pageNum) {
   callPMC(window.searchStr, pageNum);
 }
 
-function callPMC(search, currentPage) {
-
-  // get the query term.
-  var queryTerm = $("#search").val();
+function callPMC(queryTerm, currentPage) {
 
   var retmax = 10;
     // get the start. 
@@ -292,6 +256,22 @@ function callPMC(search, currentPage) {
       var ePubDate = $(val).find("Item[Name='EPubDate']").text();
       
       var source = $(val).find("Item[Name='Source']").text();
+      
+      //check if the source (journal) is in the journals list
+      if (window.jList.indexOf(source) === -1) {
+        window.jList.push(source);
+        //append item like
+        //<li class="search-refresh"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="eLife"/>eLife</label></li>
+        //to journal-list
+        var newJournal = $('<li class="search-refresh">').append(
+          $('<label class="checkbox">').append(
+            $('<input type="checkbox" name="jrnlpub">').attr('value', 'source')
+          ).append(source)
+        ).click(function() {
+          callPMC(window.searchStr, 1);
+        });
+        $('#journal-list').append(newJournal);
+      }
 
       // logic around displaying published date
       // 2011 November 17
