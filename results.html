@@ -99,8 +99,8 @@
 
            <h3>OA</h3>
            <ul class="unstyled">
-            <li class="search-refresh"><label class="radio" name="full_only"><input type="radio" checked="checked" name="type" value="full_only"/>Full Article Only</label></li>
-            <li class="search-refresh"><label class="radio" name="all_results"><input type="radio" name="type" value="all_results"/>All Results</label></li>
+            <li><label class="radio" name="full_only"><input type="radio" class="search-refresh" checked="checked" name="type" value="full_only"/>Full Article Only</label></li>
+            <li><label class="radio" name="all_results"><input type="radio" class="search-refresh" name="type" value="all_results"/>All Results</label></li>
           </ul>
 
           <h3>Journals</h3>
@@ -160,11 +160,15 @@ function getParameterByName(name) {
 $( document ).ready(function() {  
   value = getParameterByName("query")
   if (value.length > 0) {
+    $('#search').val(value);
     search(value);
   }
   $('#search-submit').click(function() {
     search( $('#search').val() );
-  })  
+  });
+  $('.search-refresh').change(function() {
+    callPMC(window.searchStr, 1);
+  });
 });
 
 function search(searchStr) {
@@ -265,11 +269,11 @@ function callPMC(queryTerm, currentPage) {
         //to journal-list
         var newJournal = $('<li class="search-refresh">').append(
           $('<label class="checkbox">').append(
-            $('<input type="checkbox" name="jrnlpub">').attr('value', 'source')
+            $('<input type="checkbox" name="jrnlpub">').attr('value', source).change(function () {
+              callPMC(window.searchStr, 1);
+            })
           ).append(source)
-        ).click(function() {
-          callPMC(window.searchStr, 1);
-        });
+        );
         $('#journal-list').append(newJournal);
       }
 
