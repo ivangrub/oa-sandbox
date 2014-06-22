@@ -233,7 +233,7 @@ function callPMC(currentPage) {
       return;
     }
     var totalPages = (total / retmax);
-    if (total % retmax > 0) {
+    while (total % retmax > 0) {
       totalPages = totalPages + 1;
     }
 
