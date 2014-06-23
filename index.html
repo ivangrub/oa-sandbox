@@ -24,104 +24,130 @@
 <!-- NAVBAR
 ================================================== -->
 
-<div class="navbar-wrapper">
+
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
-
-    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">OA Sandbox</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
-      </div>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">OA Sandbox</a>
     </div>
-
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
   </div>
 </div>
+
+
     
 <!-- Carousel
 ================================================== -->
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="item active">
-      <img src="img/carousel-jellyfish1.jpg" alt="" style="opacity: .75">
-      <div class="container">
-        <div class="carousel-caption">
-          <h1>PMC Revisualized</h1>
-	          <p class="lead">With its modern web-based interface, Lens makes reading scientific articles easier. Explore figures, figure descriptions, references and more - all with the article in full view.</p>
-        
-	        <form>
-		        <div class="form-group">
-		        	<label for="search">Search based on PMCID, author, title, and keyword to find articles to read in Lens PMC.*</label>
-		        	<input name="search" id="search" class="form-control" type="text" placeholder="Enter a PubMed search query">
-		        </div>
-		        <div class="form-group">
-		        	<button type="submit" class="btn btn-default">Search</button>
-		        </div>
-		    </form>
-        
-        </div>
-      </div>
-    </div>
+<div class="jumbotron">
+  <div class="container">
+      <h1>PMC Revisualized</h1>
+          <p class="lead">With its modern web-based interface, Lens makes reading scientific articles easier. Explore figures, figure descriptions, references and more - all with the article in full view.</p>
     
-    <div class="item">
-      <img src="img/carousel-jellyfish2.jpg" alt="" style="opacity: .75">
-      <div class="container">
-        <div class="carousel-caption">
-          <h1>Web-native tools (like it's 2014)</h1>
-          <p class="lead">OA Sandbox integrates the newest tools created to enhance discovery, discussion, and engagement with the research that you need.</p>
-          
-          <form>
-	        <input id="search" class="search-query" type="text">
-	        <a id="search_button" class="btn btn-inverse" href="#" >Search</a>
+        <form method="GET" action="results.html" class="col-md-6 col-md-offset-2">
+	        <div class="form-group">
+	        	<label for="search">Search based on PMCID, author, title, and keyword to find articles to read in Lens PMC.*</label>
+	        	<input name="search" id="search" class="form-control" type="text" placeholder="Enter a PubMed search query">
+	        </div>
+	        <div class="form-group">
+	        	<button type="submit" class="btn btn-default" id="search-button">Search</button>
+	        </div>
 	    </form>
-          
-        </div>
-      </div>
-    </div>
-    
-    
-    <div class="item">
-      <img src="img/carousel-jellyfish3.jpg" alt="" style="opacity: .75">
-      <div class="container">
-        <div class="carousel-caption">
-          <h1>Contribute to the sandbox</h1>
-          <p class="lead">Develop with us: build, apply, and test your software with the full corpus of PMC content for the whole biomedical and life sceience community.</p>
-          
-          <btn>Check out the project on GitHub</btn>
-          
-        </div>
-      </div>
-    </div>
-  
   </div>
-  <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-  <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-</div><!-- /.carousel -->
+</div>
 
+<!--end Carousel-->
 
+<!-- START THE FEATURETTES -->
 
-<footer>
-	<p>* Not all articles are Open Access in PMC. Due to copyright, these papers are not available in full.</p>
-</footer> 
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-6">
+      
+      <h2>Web native tools. <span class="text-muted">(Like it's 2014).</span></h2>
+      <p class="lead">OA Sandbox integrates the newest tools created to enhance discovery, discussion, and engagement with the research that you need.</p>
+      <a class="btn btn-success" href="#about" role="button">Learn more</a>
+    </div>
+
+    <div class="col-md-6">
+      <h2>Contribute to the sandbox.</h2>
+      <p class="lead">Develop with us: build, apply, and test your software with the full corpus of PMC content for the whole biomedical and life sceience community.</p>
+      <a class="btn btn-success" href="#contact">Come build with us</a>
+  	</div>
+  </div>
+
+<div class="divider"  id="about"></div>
+
+<h1>About</h1>
+
+<h3>OA Sandbox</h3>
+        <p>OA Sandbox is a space where the community can apply the newest tools for discovering and engaging with research content on a single corpus of scholarly work that is broad enough to span large research areas and multiple publishers. Currently, all contents deposited in PubMed Central® (PMC), a free archive of biomedical and life sciences journal literature at the U.S. National Institutes of Health's National Library of Medicine (NIH/NLM), are available in the OA Sandbox.</p>
+
+        <p>While Open Access content is available in PMC, not all articles are available due to copyright. Publishers and individual authors continue to hold copyright on the material in PMC and users must abide by the terms defined by the copyright holder. All gold Open Access (CC-BY copyright) articles are displayed in full. Due to copyright restrictions, only the article abstract can be made available for non-CC-BY licensed articles.</p>
+
+        <p> The backbone of the OA Sandbox is the Lens reader, a modern web-based platform for presenting and reading research articles.</p>
+        
+        <h3>Lens</h3>
+        <p>Traditional presentation-centric formats do not optimize the reading experience. Lens considers content as data and makes it accessible on a unified platform, which can present all article content in a uniform way. While each publisher displays information (e.g., author’s impact statement, article keywords, major dataset links, etc.) in different positions on the webpage, Lens distills all of the article information into organized subsections to make it easy to quickly find what the reader is looking for.</p>
+
+        <p>A document map identifies the reader's position in the context of the entire article. It also outlines each paragraph in the article. The left panel includes all of the textual content of the article. The right panel includes the resources. The resources include the table of contents, figures, tables, videos, supplemental data, references and information about the article. By separating the content into individual panels, Lens allows the reader to focus on multiple content bits at the same time. Lens also separates the figures from the text so that the reader can transition between the text and figures independently of one another. This allows the reader to simultaneously view exactly the content they want to focus on at that moment.</p>
+
+        <h3>Credits</h3>
+        <p>OA Sandbox was started by Ivan Grubisic with the help of Jennifer Lin, Jennifer Song, and Polina Grinbaum. The source code for OA Sandbox is available <a href="https://github.com/ivangrub/oa-sandbox">here</a>.</p>
+
+        <p><a href="http://lens.substance.io/#lens/about"> Lens</a> is an open source project. The technology was originally developed as eLife Lens, a collaboration between UC Berkeley graduate student Ivan Grubisic and eLife. Michael Aufreiter from Substance provided support in the design and implementation. The source code for eLife Lens is available <a href="https://github.com/elifesciences/lens">here</a>.</p>
+
+<div class="divider" id="contact"></div>
+
+<h1>Contact</h1>
+
+<h3>Come build with us! OA Sandbox is a community space welcome to all.</h3>
+        <p>We hope to continue to build out the sandbox with a wide set of scholarly communication tools. </p>
+        <p>Areas of interest include but are not limited to: 
+          <ul><li>discovery (search, visualization-based interactivity, article-level metrics, article recommendations)</li>
+            <li>semantic enrichment</li>
+            <li>annotation, etc.</li> 
+          </ul>
+        </p>
+        <p>It is a great opportunity for developers to test their applications on the broadest set of open content available today (~3 million articles) and let the scholarly community use it & provide feedback.</p>
+        <p>If you are interested in contributing to the suite of tools applied to PMC content, please contact <a href="http://www.linkedin.com/pub/ivan-grubisic/26/353/739">Ivan Grubisic</a> or <a href="mailto:jlin@plos.org">Jennifer Lin</a>. </p>
+        <p>General feedback is also welcome.</p>
+
+<div class="divider"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><a href="#">Back to top</a></p>
+    <p>* Not all articles are Open Access in PMC. Due to copyright, these papers are not available in full.</p>
+    
+    <p>This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License, version 2, as 
+    published by the Free Software Foundation.</p>
+
+    <p>This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.</p>
+
+    <p>You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA</p>
+  </footer>
+
+</div><!--/container-->
 
     <!-- Le javascript
     ================================================== -->
@@ -129,28 +155,6 @@
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
-    <script>
-      !function ($) {
-        $(function(){
-          // carousel demo
-          $('#myCarousel').carousel(
-          {
-            interval: false
-          })
-        })
-      }(window.jQuery)
-
-$('#search_button').on("click", function() {
-  window.location.href = "/results.html?query=" + $("#search").val();
-}); 
-
-$("#search").on("keypress", function(event) {
-  if ( event.which == 13 ) {
-    event.preventDefault();
-    $("#search_button").click();
-  }
-});
-
-    </script>
+    
   </body>
 </html>
