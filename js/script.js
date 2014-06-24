@@ -1,13 +1,5 @@
 //javascript document
 
-//make sure hitting return works for search box
-$("#search").on("keypress", function(event) {
-  if ( event.which == 13 ) {
-    event.preventDefault();
-    search( $('#search').val() );
-  }
-});
-
 //get GET variable by name
 // got from http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
 function getParameterByName(name) {
@@ -19,18 +11,26 @@ function getParameterByName(name) {
 
 
 $( document ).ready(function() {  
-  //on page load, get GET variable "query"
-  var value = getParameterByName("query")
-  if (value.length > 0) {
-    $('#search').val(value);
-    search(value);
-  }
-  $('#search-submit').click(function() {
-    search( $('#search').val() );
-  });
-  $('.search-refresh').change(function() {
-    callPMC(window.searchStr, 1);
-  });
+  	//on page load, get GET variable "query"
+  	var value = getParameterByName("query")
+  	if (value.length > 0) {
+    	$('#search').val(value);
+    	search(value);
+  	}
+  	$('#search-form').submit(function(event) {
+    	event.preventDefault();
+    	search( $('#search').val() );
+  	});
+  	//make sure hitting return works for search box
+	$("#search").on("keypress", function(event) {
+	  if ( event.which == 13 ) {
+	    event.preventDefault();
+	    search( $('#search').val() );
+	  }
+	});
+  	$('.search-refresh').change(function() {
+    	callPMC(window.searchStr, 1);
+  	});
 });
 
 function search(searchStr) {
@@ -90,7 +90,12 @@ function callPMC(queryTerm, currentPage) {
     } else {
       //multiple pages of results
       //change #result-total
-      $("#result-total").text("Showing results " + (((currentPage - 1) * retmax) + 1) + "-" + (currentPage * retmax) + " of " + total + " results");
+      if ( currentPage * retmax < total) {	
+      	$("#result-total").text("Showing results " + (((currentPage - 1) * retmax) + 1) + "-" + (currentPage * retmax) + " of " + total + " results");
+	  } else {
+	  	//last page
+	  	$("#result-total").text("Showing results " + (((currentPage - 1) * retmax) + 1) + "-" + total + " of " + total + " results");
+	  }
       //now deal with the pagination
       //how many pages of results do we need?
       var totalPages = (total / retmax);
@@ -99,13 +104,16 @@ function callPMC(queryTerm, currentPage) {
       }
       //now change .pagination
       var options = {
+      	bootstrapMajorVersion: 3,
         currentPage: currentPage,
         totalPages: totalPages,
         onPageClicked: function(e, originalEvent, type, page) {
+          e.stopImmediatePropagation();
           switchPage(page);
-        }
+        },
+        
       };
-      $('.pagination').bootstrapPaginator(options);
+      $('#pagination').bootstrapPaginator(options);
     }
 
     var pmcIds = $.map($(data).find("IdList Id"), function(val, index) {
@@ -117,7 +125,7 @@ function callPMC(queryTerm, currentPage) {
   });
 
   chained.done(function(data) {
-    $("article > ul").empty();
+    $("#result-list").empty();
 
     $(data).find("eSummaryResult > DocSum").each(function(index, val) {
       var title = $(val).find("Item[Name='Title']").text();
@@ -178,7 +186,7 @@ function callPMC(queryTerm, currentPage) {
         .append(published)
       );
 
-      $("article > ul").append(result);
+      $("#result-list").append(result);
 
     });
 

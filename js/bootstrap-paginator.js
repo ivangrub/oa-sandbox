@@ -18,7 +18,7 @@
 
 (function ($) {
 
-    "use strict";
+    "use strict"; // jshint ;_;
 
 
     /* Paginator PUBLIC CLASS DEFINITION
@@ -49,13 +49,17 @@
 
             this.$element = $(element);
 
-            var version = (options && options.bootstrapMajorVersion) ? options.bootstrapMajorVersion : $.fn.bootstrapPaginator.defaults.bootstrapMajorVersion;
+            var version = (options && options.bootstrapMajorVersion) ? options.bootstrapMajorVersion : $.fn.bootstrapPaginator.defaults.bootstrapMajorVersion,
+                id = this.$element.attr("id");
 
             if (version === 2 && !this.$element.is("div")) {
+
                 throw "in Bootstrap version 2 the pagination must be a div element. Or if you are using Bootstrap pagination 3. Please specify it in bootstrapMajorVersion in the option";
             } else if (version > 2 && !this.$element.is("ul")) {
-                throw "in Bootstrap version 3 the pagination root item must be an ul element.";
+                throw "in Bootstrap version 3 the pagination root item must be an ul element."
             }
+
+
 
             this.currentPage = 1;
 
@@ -208,7 +212,7 @@
          *
          * */
         onPageItemClicked: function (event) {
-            event.preventDefault();
+
             var type = event.data.type,
                 page = event.data.page;
 
@@ -265,7 +269,7 @@
 
 
             this.$element.prop("class", "");
-            // default class name
+
             this.$element.addClass("pagination");
 
             switch (size.toLowerCase()) {
@@ -306,6 +310,15 @@
             //update the page element reference
             this.pageRef = [];
 
+            if (pages.first) {//if the there is first page element
+                first = this.buildPageItem("first", pages.first);
+
+                if (first) {
+                    listContainer.append(first);
+                }
+
+            }
+
             if (pages.prev) {//if the there is previous page element
 
                 prev = this.buildPageItem("prev", pages.prev);
@@ -315,36 +328,14 @@
                 }
 
             }
-            // we do not build html for "first" page - the *first* page 
-            // is just 1 page
-            if (pages.first) {//if the there is first page element
-                first = this.buildPageItem("first", pages.first);
-
-                if (first) {
-                    listContainer.append(first);
-                    listContainer.append('<li><span class="text-muted">...</span></li>');
-                }
-
-            }
-
-
 
 
             for (i = 0; i < pages.length; i = i + 1) {//fill the numeric pages.
 
                 p = this.buildPageItem("page", pages[i]);
+
                 if (p) {
                     listContainer.append(p);
-                }
-            }
-
-
-            if (pages.last) {//if there is last page
-
-                last = this.buildPageItem("last", pages.last);
-                if (last) {
-                    listContainer.append('<li><span class="text-muted">...</span></li>');
-                    listContainer.append(last);
                 }
             }
 
@@ -354,6 +345,15 @@
 
                 if (next) {
                     listContainer.append(next);
+                }
+            }
+
+            if (pages.last) {//if there is last page
+
+                last = this.buildPageItem("last", pages.last);
+
+                if (last) {
+                    listContainer.append(last);
                 }
             }
         },
@@ -376,18 +376,18 @@
                 itemContainerClass = this.options.itemContainerClass(type, page, this.currentPage),
                 itemContentClass = this.getValueFromOption(this.options.itemContentClass, type, page, this.currentPage),
                 tooltipOpts = null;
+
+
             switch (type) {
 
             case "first":
                 if (!this.getValueFromOption(this.options.shouldShowPage, type, page, this.currentPage)) { return; }
-                // always return *first* page
-                text = '1';
+                text = this.options.itemTexts(type, page, this.currentPage);
                 title = this.options.tooltipTitles(type, page, this.currentPage);
                 break;
             case "last":
                 if (!this.getValueFromOption(this.options.shouldShowPage, type, page, this.currentPage)) { return; }
-                // always return *last* page
-                text = String(this.totalPages);
+                text = this.options.itemTexts(type, page, this.currentPage);
                 title = this.options.tooltipTitles(type, page, this.currentPage);
                 break;
             case "prev":
@@ -406,9 +406,11 @@
                 title = this.options.tooltipTitles(type, page, this.currentPage);
                 break;
             }
+
             itemContainer.addClass(itemContainerClass).append(itemContent);
 
             itemContent.addClass(itemContentClass).html(text).on("click", null, {type: type, page: page}, $.proxy(this.onPageItemClicked, this));
+
             if (this.options.pageUrl) {
                 itemContent.attr("href", this.getValueFromOption(this.options.pageUrl, type, page, this.currentPage));
             }
@@ -420,7 +422,7 @@
             } else {
                 itemContent.attr("title", title);
             }
-            
+
             return itemContainer;
 
         },
@@ -567,18 +569,11 @@
         containerClass: "",
         size: "normal",
         alignment: "left",
-        bootstrapMajorVersion: 3,
-        listContainerClass: "pagination",
+        bootstrapMajorVersion: 2,
+        listContainerClass: "",
         itemContainerClass: function (type, page, current) {
-            switch(type){
-                case "prev":
-                    return "prev";
-                case "next":
-                    return "next";
-            }
             return (page === current) ? "active" : "";
         },
-        /*jshint unused:vars*/
         itemContentClass: function (type, page, current) {
             return "";
         },
@@ -586,7 +581,7 @@
         numberOfPages: 5,
         totalPages: 1,
         pageUrl: function (type, page, current) {
-            return "#";
+            return null;
         },
         onPageClicked: null,
         onPageChanged: null,
@@ -597,42 +592,35 @@
 
             switch (type) {
             case "first":
-                // the first is shown only if we are after the first 
-                // set of pages and *first* page is no longer visible
-                result = ((current-this.numberOfPages) > 0);
+                result = (current !== 1);
                 break;
             case "prev":
-                // the *prev* is always visible 
-                result = true;
+                result = (current !== 1);
                 break;
             case "next":
-                // the *next* is always visible
-                result = true;
+                result = (current !== this.totalPages);
                 break;
             case "last":
-                // the last is shown only if we are in set before the last set
-                // of pages and *last* page is not yet visible
-                var lastSet = Math.ceil(this.totalPages/this.numberOfPages);
-                var currentSet = Math.ceil(current/this.numberOfPages);
-                result = (currentSet < lastSet);
+                result = (current !== this.totalPages);
                 break;
             case "page":
                 result = true;
                 break;
             }
+
             return result;
 
         },
         itemTexts: function (type, page, current) {
             switch (type) {
             case "first":
-                return "...";
+                return "&lt;&lt;";
             case "prev":
-                return "<span class='flaticon solid left-2'></span>";
+                return "&lt;";
             case "next":
-                return "<span class='flaticon solid right-2'></span>";
+                return "&gt;";
             case "last":
-                return "...";
+                return "&gt;&gt;";
             case "page":
                 return page;
             }

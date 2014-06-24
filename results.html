@@ -34,7 +34,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">OA Sandbox</a>
+      <a class="navbar-brand" href="index.html">OA Sandbox</a>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -50,10 +50,10 @@
 
 <div class="row" id="live-search">
 
-	<form method="GET" action="results.html" class="col-sm-6 col-sm-offset-3">
+	<form method="GET" action="results.html" class="col-sm-6 col-sm-offset-3" id="search-form">
 		<div class="form-group">
 	        <label for="search">Search based on PMCID, author, title, and keyword to find articles to read in Lens PMC.*</label>
-	        <input name="search" id="search" class="form-control" type="text" placeholder="Enter a PubMed search query">
+	        <input name="query" id="search" class="form-control" type="text" placeholder="Enter a PubMed search query">
 	    </div>
 	    <div class="form-group">
 	        <button type="submit" class="btn btn-default" id="search-button">Search</button>
@@ -85,13 +85,36 @@
 	  
 	  <p id="result-total"></p>
 	  
-	  <ul class="pagination"></ul>
+	  <ul id="pagination"></ul>
 	  
-	  <ul class="unstyled"></ul>
+	  <ul class="unstyled" id="result-list"></ul>
 
 	</article>
     
 </div>
+
+<div class="divider"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><a href="index.html">Back to homepage</a></p>
+    <p>* Not all articles are Open Access in PMC. Due to copyright, these papers are not available in full.</p>
+    
+    <p>This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License, version 2, as 
+    published by the Free Software Foundation.</p>
+
+    <p>This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.</p>
+
+    <p>You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA</p>
+  </footer>
+
+
 
 </div> <!-- /container -->
 
