@@ -1,4 +1,4 @@
-.jumbotron {
+.jumbotron-landing {
 	background-image: url(../img/carousel-jellyfish1.jpg);
 	color: white;
 }
@@ -11,4 +11,17 @@
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
+}
+
+#live-search{
+	padding-top: 100px;
+	background-color: #EEE;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;	
+}
+
+.unstyled {
+	list-style-type: none;
+	padding-left: 0px;
 }
