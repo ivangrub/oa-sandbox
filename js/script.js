@@ -21,13 +21,6 @@ $( document ).ready(function() {
     	event.preventDefault();
     	search( $('#search').val() );
   	});
-  	//make sure hitting return works for search box
-	$("#search").on("keypress", function(event) {
-	  if ( event.which == 13 ) {
-	    event.preventDefault();
-	    search( $('#search').val() );
-	  }
-	});
   	$('.search-refresh').change(function() {
     	callPMC(window.searchStr, 1);
   	});
