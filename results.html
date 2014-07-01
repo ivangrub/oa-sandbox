@@ -1,324 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Lens PMC</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <head>
+    <meta charset="utf-8">
+    <title>OA Sandbox</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <!-- Le styles -->
-  <link href="docs/assets/css/bootstrap.css" rel="stylesheet">
-  <style type="text/css">
-    body {
-      padding-top: 20px;
-      padding-bottom: 60px;
-    }
+    <!-- Le styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
-    /* Custom container */
-    .container {
-      margin: 0 auto;
-      max-width: 1000px;
-    }
-    
-
-    /* Supporting marketing content */
-    .marketing {
-      margin: 60px 0;
-    }
-    .marketing p + h4 {
-      margin-top: 28px;
-    }
-
-  </style>
-  <link href="docs/assets/css/bootstrap-responsive.css" rel="stylesheet">
-
-  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="docs/assets/js/html5shiv.js"></script>
-      <![endif]-->
-
-      <!-- Fav and touch icons -->
-      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="docs/assets/ico/apple-touch-icon-144-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="docs/assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="docs/assets/ico/apple-touch-icon-72-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" href="docs/assets/ico/apple-touch-icon-57-precomposed.png">
-      <link rel="shortcut icon" href="docs/assets/ico/favicon.png">
-    </head>
-
-    <body>
-
-      <!-- NAVBAR
-    ================================================== -->
-    <div class="navbar-wrapper">
-      <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
-      <div class="container">
-
-        <div class="navbar navbar-inverse">
-          <div class="navbar-inner">
-            <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="brand" href="index.html">OA Sandbox</a>
-            <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
-            <div class="nav-collapse collapse">
-              <ul class="nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-              </ul>
-            </div><!--/.nav-collapse -->
-          </div><!-- /.navbar-inner -->
-        </div><!-- /.navbar -->
-
-      </div> <!-- /.container -->
-    </div><!-- /.navbar-wrapper -->
-
-      <div class="container search-results" style="margin-top: 100px">
-
-        <div class="masthead">
-          <!--h3 class="muted">Lens PMC</h3-->
-      
-        </div>
-        
-     <!--      <header class="header">
-            <h1>12345 results</h1>
-          </header> -->
-        <div class="row">
-          <div class="input-append span8 pull-right">
-            <input class="search span7" id="search" type="text">
-            <button class="btn btn-inverse" id="search-submit" type="button">Search!</button>
-          </div>
-        </div>    
-
-        <section class="row">
-          <sidebar class="span2 form-inline">
-
-           <h3>OA</h3>
-           <ul class="unstyled">
-            <li><label class="radio" name="full_only"><input type="radio" class="search-refresh" checked="checked" name="type" value="full_only"/>Full Article Only</label></li>
-            <li><label class="radio" name="all_results"><input type="radio" class="search-refresh" name="type" value="all_results"/>All Results</label></li>
-          </ul>
-
-          <h3>Journals</h3>
-          <ul class="unstyled" id="journal-list">
-            
-          </ul>
-        </sidebar>
-        <article class="span8 result-list">
-          <h3>Results</h3>
-          <div id="result-total" class="search-bar span8 pull-right"></div>
-          
-          <div class="pagination"></div>
-          
-          <ul class="unstyled"></ul>
-
-          <div class="pagination"></div>
-        
-        </article>
-    </section>
-  </div> <!-- /container -->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="docs/assets/js/bootstrap-transition.js"></script>
-    <script src="docs/assets/js/bootstrap-alert.js"></script>
-    <script src="docs/assets/js/bootstrap-modal.js"></script>
-    <script src="docs/assets/js/bootstrap-dropdown.js"></script>
-    <script src="docs/assets/js/bootstrap-scrollspy.js"></script>
-    <script src="docs/assets/js/bootstrap-tab.js"></script>
-    <script src="docs/assets/js/bootstrap-tooltip.js"></script>
-    <script src="docs/assets/js/bootstrap-popover.js"></script>
-    <script src="docs/assets/js/bootstrap-button.js"></script>
-    <script src="docs/assets/js/bootstrap-collapse.js"></script>
-    <script src="docs/assets/js/bootstrap-carousel.js"></script>
-    <script src="docs/assets/js/bootstrap-typeahead.js"></script>
-    <script src="docs/assets/js/bootstrap-paginator.min.js"></script>
-    <script src="docs/assets/js/jquery-dateFormat.min.js"></script>
-    <script type="text/javascript">
-
-$("#search").on("keypress", function(event) {
-  if ( event.which == 13 ) {
-    event.preventDefault();
-    search( $('#search').val() );
-  }
-});
-
-// got from http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-    var results = regex.exec(location.search);
-    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-$( document ).ready(function() {  
-  value = getParameterByName("query")
-  if (value.length > 0) {
-    $('#search').val(value);
-    search(value);
-  }
-  $('#search-submit').click(function() {
-    search( $('#search').val() );
-  });
-  $('.search-refresh').change(function() {
-    callPMC(window.searchStr, 1);
-  });
-});
-
-function search(searchStr) {
-  window.searchStr = searchStr;
-  //set the journals list to an empty array
-  window.jList = [];
-  $('#journal-list').html('');
-  //call PubMed and get results, starting at page 1
-  callPMC(searchStr, 1);  
-}
-
-function switchPage(pageNum) {
-  callPMC(window.searchStr, pageNum);
-}
-
-function callPMC(queryTerm, currentPage) {
-
-  var retmax = 10;
-    // get the start. 
-  var retstart = (currentPage - 1) * retmax;
-  
-  var searchUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc";
-  searchUrl = searchUrl + "&retmax=" + retmax + "&retstart=" + retstart;
-  searchUrl = searchUrl + "&term=" + queryTerm ;
-
-  if ($("input[name='jrnlpub']:checked").length > 0) {
-    var journalfilter = " AND (";
-    $("input[name='jrnlpub']:checked").each(function(index) {
-      journalfilter = journalfilter + "\"" + $(this).val() + "\"" + "[Jour] OR ";
-    });
-    journalfilter = journalfilter.substring(0, journalfilter.length - 4);
-    journalfilter = journalfilter + ")";
-
-    searchUrl = searchUrl + journalfilter;
-  }
-
-  if ($("input[type='radio']:checked").val() === "full_only") {
-    searchUrl = searchUrl + " AND \"open access\"[filter]";
-  }
-
-  var request = $.get(searchUrl);
-  var chained = request.then(function(data) {
-    var total = $(data).find("eSearchResult > Count").text();
- 
-    if (total == 0) {
-      $("#result-total").text("0 results");
-      $('.pagination').html('');
-      return;
-    } else if (total < 10) {
-      $('#result-total').text("1 - " + total + " results");
-      $('.pagination').html('');
-    } else {
-      $("#result-total").text((((currentPage - 1) * retmax) + 1) + "-" + (currentPage * retmax) + " of " + total + " results");
+    <![endif]-->
     
-      var totalPages = (total / retmax);
-      if (total % retmax > 0) {
-        totalPages = totalPages + 1;
-      }
-      
-      var options = {
-        currentPage: currentPage,
-        totalPages: totalPages,
-        onPageClicked: function(e, originalEvent, type, page) {
-          switchPage(page);
-        }
-      };
-  
-      $('.pagination').bootstrapPaginator(options);
-    }
+  </head>
 
-    var pmcIds = $.map($(data).find("IdList Id"), function(val, index) {
-      return $(val).text();
-    });
+<body>
+
+ <!-- NAVBAR
+================================================== -->
+
+
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">OA Sandbox</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="row" id="live-search">
+
+	<form method="GET" action="results.html" class="col-sm-6 col-sm-offset-3" id="search-form">
+		<div class="form-group">
+	        <label for="search">Search based on PMCID, author, title, and keyword to find articles to read in Lens PMC.*</label>
+	        <input name="query" id="search" class="form-control" type="text" placeholder="Enter a PubMed search query">
+	    </div>
+	    <div class="form-group">
+	        <button type="submit" class="btn btn-default" id="search-button">Search</button>
+	    </div>
+	</form>
+</div>
+
+<hr />    
+
+<div class="row">
+	<sidebar class="col-sm-3">
+
+       <h3>OA</h3>
+       <ul class="unstyled">
+        <li><label class="radio" name="full_only"><input type="radio" class="search-refresh" checked="checked" name="type" value="full_only"/>Full Article Only</label></li>
+        <li><label class="radio" name="all_results"><input type="radio" class="search-refresh" name="type" value="all_results"/>All Results</label></li>
+      </ul>
+
+      <h3>Journals</h3>
+      <ul class="unstyled" id="journal-list">
+        
+      </ul>
+    </sidebar>
+   
+	
+	<article class="col-sm-9 result-list">
+	  
+	  <h3>Results</h3>
+	  
+	  <p id="result-total"></p>
+	  
+	  <ul id="pagination"></ul>
+	  
+	  <ul class="unstyled" id="result-list"></ul>
+
+	</article>
     
-    var metadataUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pmc&id=" + pmcIds.join(",");
-    return $.get(metadataUrl);
-  });
+</div>
 
-  chained.done(function(data) {
-    $("article > ul").empty();
+<div class="divider"></div>
 
-    $(data).find("eSummaryResult > DocSum").each(function(index, val) {
-      var title = $(val).find("Item[Name='Title']").text();
-      var authors = $.map($(val).find("Item[Name='AuthorList'] > Item"), function(val, index) {
-        return $(val).text(); 
-      }).join(", ");
+  <!-- FOOTER -->
+  <footer>
+    <p><a href="index.html">Back to homepage</a></p>
+    <p>* Not all articles are Open Access in PMC. Due to copyright, these papers are not available in full.</p>
+    
+    <p>This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License, version 2, as 
+    published by the Free Software Foundation.</p>
 
-      var pubDate = $(val).find("Item[Name='PubDate']").text();
-      var ePubDate = $(val).find("Item[Name='EPubDate']").text();
-      
-      var source = $(val).find("Item[Name='Source']").text();
-      
-      //check if the source (journal) is in the journals list
-      if (window.jList.indexOf(source) === -1) {
-        window.jList.push(source);
-        //append item like
-        //<li class="search-refresh"><label class="checkbox"><input type="checkbox" name="jrnlpub" value="eLife"/>eLife</label></li>
-        //to journal-list
-        var newJournal = $('<li class="search-refresh">').append(
-          $('<label class="checkbox">').append(
-            $('<input type="checkbox" name="jrnlpub">').attr('value', source).change(function () {
-              callPMC(window.searchStr, 1);
-            })
-          ).append(source)
-        );
-        $('#journal-list').append(newJournal);
-      }
+    <p>This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.</p>
 
-      // logic around displaying published date
-      // 2011 November 17
-      var published = "";
-      if (ePubDate.length > 0) {
-        // epubdate: 2013/09/30
-        var date = new Date(ePubDate.substring(0, 4), ePubDate.substring(5, 7) - 1, ePubDate.substring(8, 10));
-        date = $.format.date(date, "yyyy MMM d");
-        published = date;
-      } else if (pubDate.length > 0) {
-        // pubdate: 2013 Oct 15
-        published = pubDate;
-      }
+    <p>You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA</p>
+  </footer>
 
-      var pmId = $(val).find("Item[Name='ArticleIds'] > Item[Name='pmid']").text();
-      var pmcId = $(val).find("Item[Name='ArticleIds'] > Item[Name='pmcid']").text();
-      var doi = $(val).find("Item[Name='ArticleIds'] > Item[Name='doi']").text();
 
-      var pmcUrl = "http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D" + pmcId.replace('PMC',"")
 
-      var result = $("<li>")
-      .append(
-        $("<h4>").append($("<a>").attr("href", "lens/?url=" + pmcUrl).attr("target", "_blank").text(title))
-      )
-      .append(
-        $("<p>")
-        .append(authors)
-        .append($("<br>"))
-        .append($("<i>").append(source))
-        .append(".&nbsp;&nbsp;")
-        .append(published)
-      );
+</div> <!-- /container -->
 
-      $("article > ul").append(result);
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-dateFormat.min.js"></script>
+<script src="js/bootstrap-paginator.js"></script>
+<script src="js/script.js"></script>
 
-    });
 
-    // until we figure out what should be in focus after the search result is rendered, 
-    // don't focus on anything
-    $("#search").blur();
-  });
-}
-    </script>
-
-  </body>
-  </html>
+</body>
+</html>
