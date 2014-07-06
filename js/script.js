@@ -49,7 +49,21 @@ function callPMC(queryTerm, currentPage) {
   searchUrl = searchUrl + "&retmax=" + retmax + "&retstart=" + retstart;
   searchUrl = searchUrl + "&term=" + queryTerm ;
 
-  //add in journal name filters
+	//add date filters if necessary
+	minDate = $('input[name="date-begin"]').val();
+	maxDate = $('input[name="date-end"]').val();
+	if ( minDate !== "" && maxDate !== "" ) {
+		searchUrl += "&datetype=pdat&mindate=" + minDate + "&maxdate=" + maxDate;
+	} else if ( maxDate !== "" ) {
+		//include a default mindate of 1809 since mindate and maxdate must be used in pairs
+		searchUrl += "&datetype=pdat&mindate=1809&maxdate=" + maxDate
+	} else if ( minDate !== "" ) {
+		//get the current year
+		currentYear = new Date().getFullYear();
+		searchUrl += "&datetype=pdat&mindate=" + minDate + "&maxdate=" + currentYear
+	}
+
+  //add in journal name filters if necessary
   if ($("input[name='jrnlpub']:checked").length > 0) {
     var journalfilter = " AND (";
     $("input[name='jrnlpub']:checked").each(function(index) {
@@ -61,9 +75,12 @@ function callPMC(queryTerm, currentPage) {
     searchUrl = searchUrl + journalfilter;
   }
 
+	//add open access filters if necessary
   if ($("input[type='radio']:checked").val() === "full_only") {
     searchUrl = searchUrl + " AND \"open access\"[filter]";
   }
+	
+	console.log(searchUrl);
 
   //send off the request
   var request = $.get(searchUrl);
