@@ -23,12 +23,12 @@
 
 
 
-
+/*
     /* CUSTOMIZE THE CAROUSEL
     -------------------------------------------------- */
 
     /* Carousel base class */
-    .carousel {
+ /*   .carousel {
       margin-bottom: 60px;
     }
 
@@ -75,14 +75,14 @@
     .carousel-caption .btn {
       margin-top: 10px;
     }
-
+*/
 
 
     /* MARKETING CONTENT
     -------------------------------------------------- */
 
     /* Center align the text within the three columns below the carousel */
-    .marketing .span4 {
+/*    .marketing .span4 {
       text-align: center;
     }
     .marketing h2 {
@@ -91,44 +91,16 @@
     .marketing .span4 p {
       margin-left: 10px;
       margin-right: 10px;
-    }
+    }*/
 
 
-    /* Featurettes
-    ------------------------- */
 
-    .featurette-divider {
-      margin: 80px 0; /* Space out the Bootstrap <hr> more */
-    }
-    .featurette {
-      padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
-      overflow: hidden; /* Vertically center images part 2: clear their floats. */
-    }
-    .featurette-image {
-      margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
-    }
-
-    /* Give some space on the sides of the floated elements so text doesn't run right into it. */
-    .featurette-image.pull-left {
-      margin-right: 40px;
-    }
-    .featurette-image.pull-right {
-      margin-left: 40px;
-    }
-
-    /* Thin out the marketing headings */
-    .featurette-heading {
-      font-size: 50px;
-      font-weight: 300;
-      line-height: 1;
-      letter-spacing: -1px;
-    }
 
 
 
     /* RESPONSIVE CSS
     -------------------------------------------------- */
-
+/*
     @media (max-width: 979px) {
 
       .container.navbar-wrapper {
@@ -206,7 +178,7 @@
         line-height: 1.5;
       }
 
-    }
+    }*/
     </style>
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -225,8 +197,8 @@
   <body>
 
 
-<nav class="navbar navbar-inverse" role="navigation">
-  <div class="container-fluid">
+<nav class="navbar navbar-inverse container" role="navigation">
+  <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -259,7 +231,51 @@
 
     <!-- Carousel
     ================================================== -->
-    <div id="myCarousel" class="carousel slide">
+ <!--    <div id="myCarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="item active">
+           <img src="img/carousel-jellyfish1.jpg" alt="" style="opacity: .75">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>PMC Revisualized</h1>
+              <p class="lead">With its modern web-based interface, Lens makes reading scientific articles easier. Explore figures, figure descriptions, references and more - all with the article in full view.</p>
+              <!<a class="btn btn-large btn-primary" href="#">Sign up today</a> -->
+        <!--     </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="img/carousel-jellyfish2.jpg" alt="" style="opacity: .75">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Web-native tools (like it's 2014)</h1>
+              <p class="lead">OA Sandbox integrates the newest tools created to enhance discovery, discussion, and engagement with the research that you need.</p>
+              <a class="btn btn-large" href="about.html">Learn more</a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+           <img src="img/carousel-jellyfish3.jpg" alt="" style="opacity: .75">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Contribute to the sandbox</h1>
+              <p class="lead">Develop with us: build, apply, and test your software with the full corpus of PMC content for the whole biomedical and life sceience community.</p>
+              <a class="btn btn-large" href="contact.html">Learn more</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div> --> <!-- /.carousel -->
+
+ <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel">
+      <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
       <div class="carousel-inner">
         <div class="item active">
            <img src="img/carousel-jellyfish1.jpg" alt="" style="opacity: .75">
@@ -291,18 +307,22 @@
             </div>
           </div>
         </div>
+          <!-- Controls -->
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
       </div>
-      <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+
     </div><!-- /.carousel -->
-
-
 
     <div class="container marketing">
             <div>
           <h1>Search PMC Articles</h1>
             <p>Search based on PMCID, author, title, and keyword to find articles to read in Lens PMC.*</p>
-        <input id="search" class="search-query" type="text">
+        <input id="search" class="search-query form-control " type="text">
         <a id="search_button" class="btn btn-inverse" href="#" >Search</a>
         <p> </p>         
         <p>* Not all articles are Open Access in PMC. Due to copyright, these papers are not available in full.</p>
@@ -327,16 +347,12 @@
     // <script src="docs/assets/js/bootstrap-carousel.js"></script>
     // <script src="docs/assets/js/bootstrap-typeahead.js"></script> -->
 
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script>
       !function ($) {
-        $(function(){
-          // carousel demo
-          $('#myCarousel').carousel(
-          {
-            interval: false
-          })
-        })
+       $('.carousel').carousel({
+  interval: 2000
+})
       }(window.jQuery)
 
 $('#search_button').on("click", function() {

@@ -245,3 +245,26 @@
   @shadow: inset 0 1px 3px rgba(0,0,0,.05), 0 1px 0 rgba(255,255,255,.1);
   .box-shadow(@shadow);
 }
+
+// PLOS specific
+
+.navbar{position: absolute; 
+  top: 1em;
+  z-index: @zindex-navbar-fixed;
+}
+
+.jumbotron{
+
+  .bg-image{opacity: .75;
+    position: absolute;
+
+  }
+  &.stack{
+    min-height: 300px;
+    background-position: fixed;
+    background-color:rgba(255,0,0,0.5);
+    .container{   background-color:rgba(0,0,0,0.5);}
+         
+  }
+}
+
