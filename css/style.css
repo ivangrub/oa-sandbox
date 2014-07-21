@@ -1,6 +1,48 @@
 .jumbotron-landing {
 	background-image: url(../img/carousel-jellyfish1.jpg);
 	color: white;
+	margin-bottom: 0;
+	padding: 5em;
+/*	border-bottom: 45px solid black;
+*//*	background-size: 80px 60px;
+  background-repeat: no-repeat;*/
+}
+.jumbotron-landing input{
+	color: #555;
+}
+.jumbotron-landing.intro{
+		padding-top: 3em;
+		padding-bottom: 5em;
+}
+
+.span6{
+	width: 50%;
+	float:left;
+}
+
+.span6:first-child{
+	padding-right: 1.5em;
+}
+.span6:last-child{
+	padding-left: 1.5em;
+}
+
+footer{ padding-bottom: 5em;}
+
+body{ padding-top: 75px;}
+body.index{padding-top: 40px;} //hack for navbar
+
+.home-search{padding: 0 1em;}
+.home-search label{ font-size: 100%;}
+.home-search #search-button { vertical-align: baseline;}
+#search{ width: 70%; display: inline-block;}
+
+.jumbotron-landing.about{
+		background-image: url(../img/carousel-jellyfish2.jpg);
+
+}
+.jumbotron-landing.contribute{
+		background-image: url(../img/carousel-jellyfish3.jpg);
 }
 
 .divider {
@@ -13,12 +55,22 @@
 	border-radius: 10px;
 }
 
-#live-search{
+/*#live-search{
 	padding-top: 100px;
 	background-color: #EEE;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;	
+}*/
+
+
+
+#live-search #search-button{
+	height: 35px;
+	padding-top:0;
+	padding-bottom: 0;
+	line-height: 35px;
+	vertical-align: bottom;
 }
 
 .unstyled {
