@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap.min.yeti.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -23,9 +23,7 @@
  <!-- NAVBAR
 ================================================== -->
 
-
-
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -39,8 +37,8 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#about">About</a></li>
-        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </div>
   </div>
@@ -52,18 +50,19 @@
 
 	<form method="GET" action="results.html" class="col-sm-6 col-sm-offset-3" id="search-form">
 		<div class="form-group">
-	        <label for="search">Search based on PMCID, author, title, and keyword to find articles to read in Lens PMC.*</label>
+	        <label for="search">Search based on PMCID, author, title, and keyword to find articles to read in Lens PMC.  Not all articles are Open Access in PMC. Due to copyright, these papers are not available in full.</label>
 	        <input name="query" id="search" class="form-control" type="text" placeholder="Enter a PubMed search query">
+          <button type="submit" class="btn btn-default " id="search-button">Search</button>
 	    </div>
 	    <p class="dateline">
 	    	<label for="date-begin"><i>(Optional)</i> Publication year</label>
 	    	<input name="date-begin" type="number" class="small-text" placeholder="1800" /> 
 	    	<label for="date-end">to</label> 
-	    	<input name="date-end" type="number" class="small-text" placeholder="present" />
+	    	<input name="date-end" type="number" class="small-text" placeholder="present" />  
 	    </p>
 	    
 	    <div class="form-group">
-	        <button type="submit" class="btn btn-default" id="search-button">Search</button>
+	       
 	    </div>
 	</form>
 </div>
@@ -100,25 +99,10 @@
     
 </div>
 
-<div class="divider"></div>
 
   <!-- FOOTER -->
   <footer>
     <p><a href="index.html">Back to homepage</a></p>
-    <p>* Not all articles are Open Access in PMC. Due to copyright, these papers are not available in full.</p>
-    
-    <p>This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
-    published by the Free Software Foundation.</p>
-
-    <p>This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.</p>
-
-    <p>You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA</p>
   </footer>
 
 
