@@ -79,8 +79,6 @@ function callPMC(queryTerm, currentPage) {
   if ($("input[type='radio']:checked").val() === "full_only") {
     searchUrl = searchUrl + " AND \"open access\"[filter]";
   }
-	
-	console.log(searchUrl);
 
   //send off the request
   var request = $.get(searchUrl);
@@ -181,9 +179,7 @@ function callPMC(queryTerm, currentPage) {
       var pmcId = $(val).find("Item[Name='ArticleIds'] > Item[Name='pmcid']").text();
       var doi = $(val).find("Item[Name='ArticleIds'] > Item[Name='doi']").text();
 
-      console.log(doi);
-
-      var result = $("<li>")
+      var result = $("<li>").attr('id', pmcId)
       .append(
         $("<h4>").append($("<a>").attr("href", "lens/?id=" + pmcId).attr("target", "_blank").text(title))
       )
@@ -195,8 +191,28 @@ function callPMC(queryTerm, currentPage) {
         .append(".&nbsp;&nbsp;")
         .append(published)
       );
-
-      $("#result-list").append(result);
+		
+		if (doi) {
+			var altmetricURI = "http://api.altmetric.com/v1/doi/" + doi;
+			$.ajax({
+				url : altmetricURI,
+				method : 'GET',
+				dataType : 'json',
+				success : function(altmetrics){
+					console.log(altmetrics);
+					var imgURI = altmetrics.images.small;
+					var link = altmetrics.details_url;
+					result.append(
+						$('<a>').attr('href', link).attr('target', '_NEW').append(
+							$('<img>').addClass('altmetric').attr('src', imgURI)
+						)
+					);
+				},
+			})
+		}
+		
+		$("#result-list").append(result);
+		
 
     });
 
