@@ -139,8 +139,13 @@
       //
       // Injects itself into body
 
+      //used a regexp because we can later match in body of URL and eliminate the
+      //? altogether. Just need to direct all requests to this folder thru index.html
+      var reg = new RegExp(/PMC(\d+)/);
+      var pmcId = document.URL.match(reg)[0];
+      
       var app = new Lens({
-        document_url: qs.url ? decodeURIComponent(qs.url) : documentURL
+        document_url: "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id=" + pmcId.replace("PMC", ""),
       });
 
       $(function() {

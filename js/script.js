@@ -181,11 +181,11 @@ function callPMC(queryTerm, currentPage) {
       var pmcId = $(val).find("Item[Name='ArticleIds'] > Item[Name='pmcid']").text();
       var doi = $(val).find("Item[Name='ArticleIds'] > Item[Name='doi']").text();
 
-      var pmcUrl = "http%3A%2F%2Feutils.ncbi.nlm.nih.gov%2Fentrez%2Feutils%2Fefetch.fcgi%3Fdb%3Dpmc%26id%3D" + pmcId.replace('PMC',"")
+      console.log(doi);
 
       var result = $("<li>")
       .append(
-        $("<h4>").append($("<a>").attr("href", "lens/?url=" + pmcUrl).attr("target", "_blank").text(title))
+        $("<h4>").append($("<a>").attr("href", "lens/?id=" + pmcId).attr("target", "_blank").text(title))
       )
       .append(
         $("<p>")
