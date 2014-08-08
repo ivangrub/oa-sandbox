@@ -144,8 +144,10 @@
       var reg = new RegExp(/PMC(\d+)/);
       var pmcId = document.URL.match(reg)[0];
       
+      var url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id=" + pmcId.replace("PMC", "");
+      
       var app = new Lens({
-        document_url: "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id=" + pmcId.replace("PMC", ""),
+        document_url: url,
       });
 
       $(function() {

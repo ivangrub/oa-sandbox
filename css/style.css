@@ -86,3 +86,9 @@ body.index{padding-top: 40px;} //hack for navbar
 .small-text {
 	width: 7em;
 }
+
+
+
+.altmetric {
+	float: right;
+}
