@@ -2,6 +2,7 @@
 
 var pubmedSearchGlobals = { 
   urlBase : "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc",
+  dataUrlBase : "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pmc&id=",
   resultsPerPage : 10,
   minDate : 1809,
   maxDate : new Date().getFullYear(),
@@ -26,7 +27,7 @@ function PubmedRequest(params) {
   obj.response = false;
   obj.url = '';
 
-  obj.buildFullUrl = function() {
+  obj.buildSearchUrl = function() {
     //builds the url from the search parameters
     if (!this.params.query) return false;
     var url = pubmedSearchGlobals.urlBase + '&term=' + obj.params.query;
@@ -56,22 +57,43 @@ function PubmedRequest(params) {
     //url = url.replace(/\s+/g, '+');
     //url = url.replace(/\(/g, '&28'))
     url = encodeURI(url);
-    console.log(url);
     this.url = url;
     return url;
   }
-  
+
+  obj.buildFullSummaryUrl = function(eSearchResponse) {
+    var numResults = $(eSearchResponse).find("eSearchResult > Count").text();
+    if (!numResults) return false;
+    if (!this.response) this.response = PubmedResponse(numResults);
+    var pmcIds = $.map( $(eSearchResponse).find("IdList Id"), function(val, index) {
+      return $(val).text();
+    });
+    var dataUrl =  pubmedSearchGlobals.dataUrlBase + pmcIds.join(",");
+    return dataUrl;
+  }
+
   obj.execute = function(pageNum) {
     //performs a pubmed search associated with a specific page of results (1 by default) 
     //creates a PubmedResponse if none exists
     //creates a new Page if needed
     //populates that Page with Results
+    var that = this;
     var retMax = pubmedSearchGlobals.resultsPerPage;
     var retStart = 0;
     var total = 0;
+    var searchUrl = this.buildSearchUrl();
+    var summaryUrl = '';
+    var result = false;
     if (pageNum > 1) retStart = (pageNum - 1) * retMax;
-    var url = this.url += '&retmax=' + retMax + '&retstart=' + retStart;
-    console.log(url);
+    searchUrl += '&retmax=' + retMax + '&retstart=' + retStart;
+    $.get(searchUrl).done(function(eSearchResponse) {
+      summaryUrl = that.buildFullSummaryUrl(eSearchResponse);
+      if (!summaryUrl) return false;
+      $.get(summaryUrl).done(function(eSummaryResponse) {
+        result = that.response.pages[pageNum] = Page(eSummaryResponse);
+        return result;
+      });
+    });
   }
   return obj;
 }
