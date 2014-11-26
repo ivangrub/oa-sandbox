@@ -77,6 +77,7 @@ function PubmedRequest(params) {
     //creates a PubmedResponse if none exists
     //creates a new Page if needed
     //populates that Page with Results
+    if (typeof pageNum === "undefined") pageNum = 1;
     var that = this;
     var retMax = pubmedSearchGlobals.resultsPerPage;
     var retStart = 0;
@@ -86,11 +87,12 @@ function PubmedRequest(params) {
     var result = false;
     if (pageNum > 1) retStart = (pageNum - 1) * retMax;
     searchUrl += '&retmax=' + retMax + '&retstart=' + retStart;
-    $.get(searchUrl).done(function(eSearchResponse) {
+    return $.get(searchUrl).then(function(eSearchResponse) {
       summaryUrl = that.buildFullSummaryUrl(eSearchResponse);
       if (!summaryUrl) return false;
-      $.get(summaryUrl).done(function(eSummaryResponse) {
-        result = that.response.pages[pageNum] = Page(eSummaryResponse);
+      return $.get(summaryUrl).then(function(eSummaryResponse) {
+        result = that.response.pages[pageNum] = Page();
+        result.populate(eSummaryResponse);
         return result;
       });
     });
@@ -100,7 +102,7 @@ function PubmedRequest(params) {
 
 function PubmedResponse(totalResults) {
   var obj = {
-    totalResults : totalResults,
+    totalResults : parseInt(totalResults, 10),
     pages : []
   }
   obj.paginator = Paginator(totalResults);
@@ -114,8 +116,33 @@ function Page() {
   }
 
   obj.populate = function(data) {
-    //given an XML doc of data, find all the results and populate with Results
-    //add to the journal list, if necessary
+    var that = this;
+    $(data).find("eSummaryResult > DocSum").each(function(index, val) {
+      var title = $(val).find("Item[Name='Title']").text();
+      var authors = $.map($(val).find("Item[Name='AuthorList'] > Item"), function(val, index) {
+        return $(val).text(); 
+      }).join(", ");
+      var pubDate = $(val).find("Item[Name='PubDate']").text();
+      var ePubDate = $(val).find("Item[Name='EPubDate']").text();
+      var source = $(val).find("Item[Name='Source']").text();
+      // logic around displaying published date
+      // 2011 November 17
+      var published = "";
+      if (ePubDate.length > 0) {
+        // epubdate: 2013/09/30
+        var date = new Date(ePubDate.substring(0, 4), ePubDate.substring(5, 7) - 1, ePubDate.substring(8, 10));
+        date = $.format.date(date, "yyyy MMM d");
+        published = date;
+      } else if (pubDate.length > 0) {
+        // pubdate: 2013 Oct 15
+        published = pubDate;
+      }
+      var pmId = $(val).find("Item[Name='ArticleIds'] > Item[Name='pmid']").text();
+      var pmcId = $(val).find("Item[Name='ArticleIds'] > Item[Name='pmcid']").text();
+      var doi = $(val).find("Item[Name='ArticleIds'] > Item[Name='doi']").text();
+      that.results.push(Result(authors, published, title, source, pmId, pmcId));
+    });
+    return true;
   }
   return obj;
 }
@@ -190,6 +217,31 @@ function JournalList() {
   }
   return obj;
 }
+
+function routeNewRequest(query) {
+  //add date filters if necessary
+  var params = { query : query,
+    minDate : $('input[name="date-begin"]').val(),
+    maxDate : $('input[name="date-end"]').val()
+  }
+  //add in journal name filters if necessary
+  if ($("input[name='jrnlpub']:checked").length > 0) {
+    var journals = [];
+    $("input[name='jrnlpub']:checked").each(function(index) {
+      journals.push( $(this).val() );
+    });
+  }
+  //add open access filters if necessary
+  if ($("input[type='radio']:checked").val() === "full_only") {
+    params.oaOnly = true;
+  }
+  var req = PubmedRequest(params);
+  req.execute().done(function() {
+    console.log(req);
+  });
+}
+
+
 
 //get GET variable by name
 // got from http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
