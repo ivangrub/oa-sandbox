@@ -79,12 +79,19 @@
       </ul>
 
       <h3>Journals</h3>
-      <ul class="unstyled" id="journal-list">
-        
-      </ul>
+      <ul class="unstyled" id="journal-list"></ul>
+      <script id="journal-template" type="text/x-handlebars-template">
+        {{#journals}}
+          <li class="search-refresh">
+            <label class="checkbox">
+              <input type="checkbox" name="jrnlpub" value="{{this}}" />
+              {{this}}
+            </label>
+          </li>
+        {{/journals}}
+      </script>
     </sidebar>
-   
-	
+
 	<article class="col-sm-9 result-list">
 	  
 	  <h3>Results</h3>
@@ -92,10 +99,10 @@
 	  <p id="result-total"></p>
 	  
 	  <ul id="pagination"></ul>
-	  
-	  <ul class="unstyled" id="result-list"></ul>
 
-      <script id="result-template" type="text/x-handlebars-tempalte">
+	  <ul class="unstyled" id="result-list"></ul>
+    <script id="result-template" type="text/x-handlebars-template">
+      {{#results}}
         <li>
           <h4>
             <a href="lens/{{ pmcid }}">{{ title }}</a>
@@ -105,7 +112,8 @@
             <span class="italic">{{ journal }}</span>&nbsp;&nbsp;{{ year }}
           </p>
         </li>
-      </script>
+      {{/results}}
+    </script>
 
 	</article>    
 </div>

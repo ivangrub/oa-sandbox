@@ -63,7 +63,6 @@ function PubmedRequest(params) {
 
   obj.buildFullSummaryUrl = function(eSearchResponse) {
     var numResults = $(eSearchResponse).find("eSearchResult > Count").text();
-    if (!numResults) return false;
     if (!this.response) this.response = PubmedResponse(numResults);
     var pmcIds = $.map( $(eSearchResponse).find("IdList Id"), function(val, index) {
       return $(val).text();
@@ -92,11 +91,12 @@ function PubmedRequest(params) {
       if (!summaryUrl) return false;
       return $.get(summaryUrl).then(function(eSummaryResponse) {
         result = that.response.pages[pageNum] = Page();
-        result.populate(eSummaryResponse);
+        result.populate(eSummaryResponse, that);
         return result;
       });
     });
   }
+  pubmedSearchGlobals.activeRequest = obj;
   return obj;
 }
 
@@ -115,7 +115,7 @@ function Page() {
     results : [],
   }
 
-  obj.populate = function(data) {
+  obj.populate = function(data, parentReq) {
     var that = this;
     $(data).find("eSummaryResult > DocSum").each(function(index, val) {
       var title = $(val).find("Item[Name='Title']").text();
@@ -141,6 +141,7 @@ function Page() {
       var pmcId = $(val).find("Item[Name='ArticleIds'] > Item[Name='pmcid']").text();
       var doi = $(val).find("Item[Name='ArticleIds'] > Item[Name='doi']").text();
       that.results.push(Result(authors, published, title, source, pmId, pmcId));
+      parentReq.response.journalList.addToJournals(source);
     });
     return true;
   }
@@ -176,6 +177,15 @@ function Paginator(totalResults) {
     } else {
       return false;
     }
+  }
+
+  obj.generateMessage = function() {
+    var first, last;
+    if (!this.totalResults) return 'No results found';
+    if (this.currentPage == this.totalPages) last = this.totalResults;
+    else last = this.currentPage * this.resultsPerPage;
+    first = (this.currentPage - 1) * this.resultsPerPage + 1;
+    return 'Showing results ' + first + '-' + last + ' of ' + this.totalResults;
   }
   return obj;
 }
@@ -237,14 +247,43 @@ function routeNewRequest(query) {
   }
   var req = PubmedRequest(params);
   req.execute().done(function() {
-    var results = req.response.pages[1].results;
-    var template = Handlebars.compile($('#result-template').html());
-    for (x = 0; x < results.length; x++) {
-      console.log(results[x]);
-      $('#result-list').append(template(results[x]));
-    }
+    render(req.response);
   });
 }
+
+function routeNewPage(pageNum) {
+  if (!pubmedSearchGlobals.activeRequest) return false;
+  var req = pubmedSearchGlobals.activeRequest;
+  if (!req.response.paginator.updatePage(pageNum)) return false;
+  if (typeof req.response.pages[pageNum] === 'undefined') {
+    req.execute(pageNum).done(function() {
+      render(req.response);
+    });
+  } else {
+    render(req.response);
+  }
+}
+
+function render(response) {
+  var page = response.paginator.currentPage;
+  var results = response.pages[page].results;
+  var journals = response.journalList.allJournals;
+  var resultTemplate = Handlebars.compile($('#result-template').html());
+  var journalTemplate = Handlebars.compile($('#journal-template').html());
+  $('#result-total').html(response.paginator.generateMessage());
+  $('#pagination').bootstrapPaginator({
+    bootstrapMajorVersion: 3,
+    currentPage: response.paginator.currentPage,
+    totalPages: response.paginator.totalPages,
+    onPageClicked: function(e, originalEvent, type, page) {
+      e.stopImmediatePropagation();
+      routeNewPage(page);
+    },
+  });
+  $('#result-list').html(resultTemplate({results:results}));
+  $('#journal-list').html(journalTemplate({journals:journals}));
+}
+
 
 //get GET variable by name
 // got from http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
