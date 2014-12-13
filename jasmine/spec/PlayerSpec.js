@@ -27,7 +27,7 @@ describe("PubmedRequest", function() {
     });
 
     afterEach(function() {      
-      url = req.buildFullUrl();
+      url = req.buildSearchUrl();
       expect(url).toMatch(/^(ht|f)tps?:\/\/[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#"\,\{\}\\|\\\^\[\]`]+)?$/);
     })
   });
@@ -36,7 +36,7 @@ describe("PubmedRequest", function() {
 
     it("the query is not set", function() {
       req = PubmedRequest({});
-      url = req.buildFullUrl();
+      url = req.buildSearchUrl();
       expect(url).toBeFalsy();
     });
 

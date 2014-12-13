@@ -95,8 +95,19 @@
 	  
 	  <ul class="unstyled" id="result-list"></ul>
 
-	</article>
-    
+      <script id="result-template" type="text/x-handlebars-tempalte">
+        <li>
+          <h4>
+            <a href="lens/{{ pmcid }}">{{ title }}</a>
+          </h4>
+          <p>
+            {{ authors }}<br />
+            <span class="italic">{{ journal }}</span>&nbsp;&nbsp;{{ year }}
+          </p>
+        </li>
+      </script>
+
+	</article>    
 </div>
 
 
@@ -116,6 +127,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery-dateFormat.min.js"></script>
 <script src="js/bootstrap-paginator.js"></script>
+<script src="js/handlebars-v2.0.0.js"></script>
 <script src="js/script.js"></script>
 
 
