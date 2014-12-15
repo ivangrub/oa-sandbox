@@ -15,7 +15,6 @@ function PubmedRequest(params) {
     query : false,
     minDate : false,
     maxDate : false,
-    journals : false,
     oaOnly : false
   }
   obj.params = params;
@@ -24,6 +23,7 @@ function PubmedRequest(params) {
       obj.params[option] = defaults[option];
     }
   }
+  obj.journalList = JournalList();
   obj.response = false;
   obj.url = '';
 
@@ -32,10 +32,10 @@ function PubmedRequest(params) {
     if (!this.params.query) return false;
     var url = pubmedSearchGlobals.urlBase + '&term=' + obj.params.query;
     //add journal filters if necessary
-    if (this.params.journals) {
+    if (this.journalList.activeJournals) {
       var journalFilter = " AND (";
-      for (index in this.params.journals) {
-        journalFilter += '"' + this.params.journals[index] + '"[Jour] OR ';
+      for (index in this.journalList.activeJournals) {
+        journalFilter += '"' + this.journalList.activeJournals[index] + '"[Jour] OR ';
       }
       journalFilter = journalFilter.substring(0, journalFilter.length - 4);
       journalFilter += ")";
@@ -53,9 +53,6 @@ function PubmedRequest(params) {
       if (!this.params.maxDate) this.params.maxDate = pubmedSearchGlobals.maxDate;
       url += '&datetype=pdat&mindate=' + this.params.minDate + '&maxdate=' + this.params.maxDate;
     }
-    //replace backslash chars with + to create a valid url
-    //url = url.replace(/\s+/g, '+');
-    //url = url.replace(/\(/g, '&28'))
     url = encodeURI(url);
     this.url = url;
     return url;
@@ -81,7 +78,9 @@ function PubmedRequest(params) {
     var retMax = pubmedSearchGlobals.resultsPerPage;
     var retStart = 0;
     var total = 0;
+    console.log(this.journalList.activeJournals);
     var searchUrl = this.buildSearchUrl();
+    console.log(searchUrl);
     var summaryUrl = '';
     var result = false;
     if (pageNum > 1) retStart = (pageNum - 1) * retMax;
@@ -106,7 +105,6 @@ function PubmedResponse(totalResults) {
     pages : []
   }
   obj.paginator = Paginator(totalResults);
-  obj.journalList = JournalList();
   return obj;
 }
 
@@ -141,7 +139,7 @@ function Page() {
       var pmcId = $(val).find("Item[Name='ArticleIds'] > Item[Name='pmcid']").text();
       var doi = $(val).find("Item[Name='ArticleIds'] > Item[Name='doi']").text();
       that.results.push(Result(authors, published, title, source, pmId, pmcId));
-      parentReq.response.journalList.addToJournals(source);
+      parentReq.journalList.addToJournals(source);
     });
     return true;
   }
@@ -204,6 +202,10 @@ function JournalList() {
       return false;
     }
   }
+  obj.hasActive = function(journalName) {
+    if (this.activeJournals.indexOf(journalName) === -1) return false;
+    else return true;
+  }
   obj.addToActive = function(journalName) {
     //check for duplicates, check that is IN in active list, add to activeJournals if not already in there
     if (this.activeJournals.indexOf(journalName) === -1 &&
@@ -217,7 +219,6 @@ function JournalList() {
   obj.removeFromActive = function(journalName) {
     //remove the journal name from the list of active journals
     var index = this.activeJournals.indexOf(journalName);
-    console.log(journalName, index);
     if (index !== -1) {
       var item = this.activeJournals.splice(index, 1);
       return item[0];
@@ -234,20 +235,33 @@ function routeNewRequest(query) {
     minDate : $('input[name="date-begin"]').val(),
     maxDate : $('input[name="date-end"]').val()
   }
-  //add in journal name filters if necessary
-  if ($("input[name='jrnlpub']:checked").length > 0) {
-    params.journals = [];
-    $("input[name='jrnlpub']:checked").each(function(index) {
-      params.journals.push( $(this).val() );
-    });
-  }
   //add open access filters if necessary
-  if ($("input[type='radio']:checked").val() === "full_only") {
-    params.oaOnly = true;
-  }
+  params.oaOnly = true;
   var req = PubmedRequest(params);
   req.execute().done(function() {
-    render(req.response);
+    render(req, req.response);
+  });
+}
+
+function modifyRequest($element) {
+  if (!pubmedSearchGlobals.activeRequest) return false;
+  var req = pubmedSearchGlobals.activeRequest;
+  var name = $element.attr('name');
+  var value = $element.val();
+  //fresh search: destroy the response;
+  req.response = false;
+  switch(name) {
+    case 'article_type':
+      if (value == 'full_article') req.params.oaOnly = true;
+      else req.params.oaOnly = false;
+      break;
+    case 'jrnlpub':
+      if ($element.prop('checked')) req.journalList.addToActive(value);
+      else req.journalList.removeFromActive($element.val());
+      break;
+  }
+  req.execute().done(function() {
+    render(req, req.response);
   });
 }
 
@@ -257,17 +271,17 @@ function routeNewPage(pageNum) {
   if (!req.response.paginator.updatePage(pageNum)) return false;
   if (typeof req.response.pages[pageNum] === 'undefined') {
     req.execute(pageNum).done(function() {
-      render(req.response);
+      render(req, req.response);
     });
   } else {
-    render(req.response);
+    render(req, req.response);
   }
 }
 
-function render(response) {
+function render(request, response) {
   var page = response.paginator.currentPage;
   var results = response.pages[page].results;
-  var journals = response.journalList.allJournals;
+  var journals = request.journalList.allJournals;
   var resultTemplate = Handlebars.compile($('#result-template').html());
   var journalTemplate = Handlebars.compile($('#journal-template').html());
   $('#result-total').html(response.paginator.generateMessage());
@@ -282,8 +296,15 @@ function render(response) {
   });
   $('#result-list').html(resultTemplate({results:results}));
   $('#journal-list').html(journalTemplate({journals:journals}));
+  $('#journal-list input').each(function() {
+    if (request.journalList.hasActive($(this).val())) {
+      $(this).prop('checked', true);
+    }
+  })
+  $('.search-refresh').unbind().change(function() {
+    modifyRequest( $(this) );
+  });
 }
-
 
 //get GET variable by name
 // got from http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
@@ -293,3 +314,20 @@ function getParameterByName(name) {
     var results = regex.exec(location.search);
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
+
+$( document ).ready(function() {  
+  //on page load, get GET variable "query"
+  var value = getParameterByName("query")
+  if (value.length > 0) {
+    $('#search').val(value);
+    routeNewRequest(value);
+  }
+  $('#search-form').submit(function(event) {
+    event.preventDefault();
+    routeNewRequest( $('#search').val() );
+  });
+  $('.search-refresh').change(function() {
+    modifyRequest( $(this) );
+  });
+});
