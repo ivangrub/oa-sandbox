@@ -78,9 +78,7 @@ function PubmedRequest(params) {
     var retMax = pubmedSearchGlobals.resultsPerPage;
     var retStart = 0;
     var total = 0;
-    console.log(this.journalList.activeJournals);
     var searchUrl = this.buildSearchUrl();
-    console.log(searchUrl);
     var summaryUrl = '';
     var result = false;
     if (pageNum > 1) retStart = (pageNum - 1) * retMax;
@@ -252,7 +250,7 @@ function modifyRequest($element) {
   req.response = false;
   switch(name) {
     case 'article_type':
-      if (value == 'full_article') req.params.oaOnly = true;
+      if (value == 'full_only') req.params.oaOnly = true;
       else req.params.oaOnly = false;
       break;
     case 'jrnlpub':
